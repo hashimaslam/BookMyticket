@@ -1,0 +1,123 @@
+.card {
+  border-radius: 8px !important;
+  width: 18rem;
+  img {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+}
+@media only screen and (max-width: 700px) {
+  .card {
+    width: 11rem;
+    .card-left {
+      .likes {
+        .heart-icon {
+          svg {
+            width: 13px;
+            height: 20px;
+          }
+        }
+        .percentage {
+          font-size: 12px !important;
+
+          line-height: 10px;
+        }
+      }
+      .__votes {
+        .__count {
+          font-size: 10px !important;
+          color: $color-font-muted;
+          line-height: 12px;
+        }
+      }
+    }
+  }
+  .card-right {
+    .card-heading {
+      h4 {
+        font-size: 12px !important;
+      }
+    }
+    .card-tag {
+      margin-top: 4px;
+
+      span {
+        font-size: 12px;
+      }
+    }
+  }
+}
+.card-details {
+  background: $color-white;
+  padding: 10px 5px !important;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  .card-left {
+    display: inline-block;
+    vertical-align: top;
+    width: 25%;
+    .likes {
+      text-align: center !important;
+      padding-top: 0 !important;
+      .heart-icon {
+        display: inline-block !important;
+        margin-right: 5px !important;
+        fill: #d6181f !important;
+        svg {
+          margin-top: -5px !important;
+        }
+      }
+      .percentage {
+        font-size: 14px;
+        color: $color-font-black;
+        line-height: 16px;
+        vertical-align: top;
+        display: inline-block;
+        margin-top: 2px !important;
+      }
+    }
+    .__votes {
+      .__count {
+        font-size: 12px;
+        color: $color-font-muted;
+        line-height: 14px;
+        text-align: center;
+      }
+    }
+  }
+  .card-right {
+    display: inline-block;
+    vertical-align: top;
+    width: 70%;
+    margin-left: 3px;
+    .card-heading {
+      h4 {
+        font-size: 14px;
+        color: $color-font-black;
+        line-height: normal;
+        text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 200px;
+      }
+    }
+    .card-tag {
+      margin-top: 4px;
+      width: 100%;
+      line-height: 14px;
+      span {
+        font-size: 12px;
+        color: $color-font-muted;
+      }
+    }
+  }
+}
+//cards conatiner
+
+.cards-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+}
