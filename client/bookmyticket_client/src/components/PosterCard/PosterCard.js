@@ -1,10 +1,14 @@
 import React from "react";
-import img1 from "./img1.jpg";
-const PosterCard = () => {
+// import img1 from "./img1.jpg";
+const PosterCard = props => {
   return (
     <div>
-      <div className="card main-conatiner mt-lg-5 ml-lg-5">
-        <img className="card-img-top" src={img1} alt="Card image cap" />
+      <div className="card main-conatiner mb-3 ">
+        <img
+          className="card-img-top"
+          src={`http://image.tmdb.org/t/p/w500/${props.img}`}
+          alt="Card image cap"
+        />
         <div className="card-body card-details">
           <div className="card-left">
             <div className="popularity">
@@ -26,20 +30,33 @@ const PosterCard = () => {
                     />
                   </svg>
                 </div>
-                <div className="percentage">61%</div>
+                <div className="percentage">{props.like}%</div>
               </div>
               <div className="__votes">
-                <div className="__count">26,507</div>
+                <div className="__count">{props.vote},20</div>
                 <div className="__count">votes</div>
               </div>
             </div>
           </div>
           <div className="card-right">
             <div className="card-heading">
-              <h4>WorldFamous Lover</h4>
+              <h4>{props.title}</h4>
             </div>
             <div className="card-tag">
-              <span>UA | Tamil</span>
+              <span>
+                UA |{" "}
+                {props.language === "hi"
+                  ? "Hindi"
+                  : props.language === "ta"
+                  ? "Tamil"
+                  : props.language === "te"
+                  ? "Telugu"
+                  : props.language === "en"
+                  ? "English"
+                  : props.language === "ko"
+                  ? "Korean"
+                  : props.language}
+              </span>
             </div>
           </div>
         </div>

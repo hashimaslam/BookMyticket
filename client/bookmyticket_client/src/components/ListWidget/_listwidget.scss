@@ -1,0 +1,29 @@
+.left-widget {
+  background-color: $color-white;
+  padding-bottom: 5px;
+  margin-bottom: 2px;
+  min-width: 240px;
+  .widget-title {
+    font-size: 16px;
+    color: $color-font-black;
+    font-weight: 400;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    padding-top: 10px;
+    margin-left: 10px;
+    &:hover {
+      color: $color-blue;
+      cursor: pointer;
+    }
+  }
+  .widget-mute {
+    font-weight: 500;
+    font-size: 12px;
+    margin-left: 10px;
+    margin-top: 3px;
+    margin-bottom: 5px;
+    color: $color-font-muted;
+    padding: 0;
+    line-height: 14px;
+  }
+}

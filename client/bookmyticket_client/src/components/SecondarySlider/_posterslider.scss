@@ -1,0 +1,82 @@
+@import url(//db.onlinewebfonts.com/c/0e979bd4a3c1c6ac788ed57ac569667f?family=revicons);
+@font-face {
+  font-family: "revicons";
+  src: url("//db.onlinewebfonts.com/t/0e979bd4a3c1c6ac788ed57ac569667f.eot");
+  src: url("//db.onlinewebfonts.com/t/0e979bd4a3c1c6ac788ed57ac569667f.eot?#iefix")
+      format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/0e979bd4a3c1c6ac788ed57ac569667f.woff2")
+      format("woff2"),
+    url("//db.onlinewebfonts.com/t/0e979bd4a3c1c6ac788ed57ac569667f.woff")
+      format("woff"),
+    url("//db.onlinewebfonts.com/t/0e979bd4a3c1c6ac788ed57ac569667f.ttf")
+      format("truetype"),
+    url("//db.onlinewebfonts.com/t/0e979bd4a3c1c6ac788ed57ac569667f.svg#revicons")
+      format("svg");
+}
+
+.image-item {
+  padding: 0px 0px 0px 15px !important;
+}
+.react-multiple-carousel__arrow {
+  position: absolute;
+  outline: none;
+  transition: all 0.5s;
+  border-radius: 35px;
+  z-index: 9 !important;
+  border: none;
+  background: white !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  opacity: 0 !important;
+  cursor: pointer;
+  &:focus {
+    outline: 0 !important;
+  }
+}
+
+// .react-multiple-carousel__arrow:hover {
+//   opacity: 1 !important;
+//   background: rgba(0, 0, 0, 0.8);
+// }
+.react-multiple-carousel__arrow::before {
+  font-size: 20px;
+  color: black !important;
+  display: block;
+  font-family: revicons;
+  text-align: center;
+  z-index: 9 !important;
+  position: relative;
+}
+
+.react-multiple-carousel__arrow--left {
+  left: calc(0% + 1px) !important;
+}
+.react-multiple-carousel__arrow--left::before {
+  content: "\e824";
+}
+.react-multiple-carousel__arrow--right {
+  right: calc(0% + 1px) !important;
+}
+.react-multiple-carousel__arrow--right::before {
+  content: "\e825";
+}
+
+.slider-wrapper {
+  width: 100%;
+
+  transition: all 5s ease-in;
+  &:hover {
+    .react-multiple-carousel__arrow {
+      opacity: 1 !important;
+    }
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .slider-wrapper {
+    width: 95vw !important;
+  }
+  .react-multiple-carousel-list {
+    margin-right: 15px;
+  }
+}

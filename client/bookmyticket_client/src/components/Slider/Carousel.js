@@ -11,7 +11,8 @@ const flickityOptions = {
   wrapAround: true,
   setGallerySize: false,
   autoPlay: true,
-  pageDots: true
+  pageDots: true,
+  lazyLoad: true
 };
 
 class Carousel extends React.Component {
@@ -42,7 +43,11 @@ class Carousel extends React.Component {
           {images.map((item, index) => {
             return (
               <div className="flickity-container" key={index}>
-                <img className="carousel-img" src={item} alt="img" />
+                <img
+                  className="carousel-img"
+                  data-flickity-lazyload={item}
+                  alt="img"
+                />
               </div>
             );
           })}

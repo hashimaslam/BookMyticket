@@ -1,0 +1,14 @@
+.city-icon-modal {
+  width: 80px;
+  height: 80px;
+  fill: $color-font-muted;
+  background-color: $color-font-muted;
+}
+.city-modal {
+  fill: $color-font-muted;
+}
+.city-modal-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

@@ -3,7 +3,8 @@ import ReactDOM from "react-dom";
 import "./sass/main.scss";
 import App from "./components/App";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import * as serviceWorker from "./serviceWorker";
 import WebFont from "webfontloader";
 

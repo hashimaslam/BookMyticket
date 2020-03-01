@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
@@ -6,9 +6,15 @@ import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
 // import FormControl from "react-bootstrap/FormControl";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import CityModal from "../CityModal/CityModal";
 // import Container from "react-bootstrap/Container";
 import Logo from "./Logo";
+
 const PrimaryNav = () => {
+  const [modal, setModal] = useState(false);
+  const handleModalClick = () => {
+    setModal(modal => !modal);
+  };
   return (
     <div>
       <Navbar
@@ -42,14 +48,13 @@ const PrimaryNav = () => {
             />
           </form>
           <Nav>
-            <Nav.Link className="primary-link pr-lg-3">
-              <NavDropdown title="Bengaluru" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Another action
-                </NavDropdown.Item>
-              </NavDropdown>
+            <Nav.Link
+              className=" pr-lg-3 primary-link mt-sm-2"
+              onClick={handleModalClick}
+            >
+              City
             </Nav.Link>
+            {modal ? <CityModal shows={modal} /> : null}
             <Nav.Link className=" pr-lg-3">
               <NavDropdown
                 title="Hello!"
@@ -65,7 +70,7 @@ const PrimaryNav = () => {
             <Button
               // variant="outline-light"
               size="sm"
-              className="primary-button mr-lg-5 "
+              className="primary-button mr-lg-5"
             >
               Sign Out
             </Button>

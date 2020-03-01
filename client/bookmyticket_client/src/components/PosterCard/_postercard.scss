@@ -1,6 +1,6 @@
 .card {
   border-radius: 8px !important;
-  width: 18rem;
+  width: 20.5rem;
   img {
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
@@ -9,6 +9,10 @@
 @media only screen and (max-width: 700px) {
   .card {
     width: 11rem;
+    img {
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
     .card-left {
       .likes {
         .heart-icon {
@@ -24,6 +28,7 @@
         }
       }
       .__votes {
+        display: none;
         .__count {
           font-size: 10px !important;
           color: $color-font-muted;
@@ -39,12 +44,16 @@
       }
     }
     .card-tag {
+      display: none;
       margin-top: 4px;
 
       span {
         font-size: 12px;
       }
     }
+  }
+  .card-body {
+    display: none;
   }
 }
 .card-details {
