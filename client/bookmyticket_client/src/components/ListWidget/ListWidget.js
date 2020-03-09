@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { MainContext } from "../App";
+import { Link } from "react-router-dom";
 
 const ListWidget = () => {
   const maincontext = useContext(MainContext);
@@ -9,7 +10,9 @@ const ListWidget = () => {
       {items.map(item => {
         return (
           <div className="left-widget" key={item.id}>
-            <p className="widget-title">{item.title}</p>
+            <Link to={`details/${item.moviesid}`}>
+              <p className="widget-title">{item.title}</p>
+            </Link>
             <p className="widget-mute">Movie</p>
           </div>
         );
