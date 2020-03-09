@@ -35,13 +35,11 @@ const port = process.env.PORT || 5000;
 const ENV = process.env.NODE_ENV;
 if (ENV === "production") {
   app.use(
-    express.static(
-      path.join(__dirname, "../../client/bookmyticket_client/build")
-    )
+    express.static(path.join(__dirname, "./client/bookmyticket_client/build"))
   );
   app.use((req, res) => {
     res.sendFile(
-      path.join(__dirname, "../../client/bookmyticket_client/build/index.html")
+      path.join(__dirname, "./client/bookmyticket_client/build/index.html")
     );
   });
 }
