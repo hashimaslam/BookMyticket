@@ -25,9 +25,7 @@ db.authenticate()
     console.log(err);
   });
 //Routes
-app.get("/", (req, res) => {
-  res.send("hello");
-});
+
 
 app.use("/api", apiRouter);
 app.use("/auth", authRouter);
