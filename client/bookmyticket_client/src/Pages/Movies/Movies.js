@@ -57,11 +57,11 @@ const Movies = () => {
               Coming Soon
             </p>
           </div>
-          <div className="row px-3">
+          <div className="row px-lg-3">
             <div className="col-sm-3">
               <FilterWidget />
             </div>
-            <div className="col-sm-9 pr-lg-3 pl-lg-2">
+            <div className="col-sm-9 pr-lg-3 pl-lg-2 movie-list-grid-col">
               <div className="movie-listing-grid ">
                 {loading && (
                   <div class="spinner-border text-danger" role="status">

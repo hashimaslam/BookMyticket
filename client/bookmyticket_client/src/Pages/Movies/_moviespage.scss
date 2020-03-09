@@ -36,6 +36,13 @@
 }
 
 @media only screen and (max-width: 800px) {
+  .movie-list-grid-col {
+    padding: 0 !important;
+    .movie-listing-grid {
+      padding-left: 30px !important;
+    }
+  }
+
   .wrapper-title-nav {
     display: flex;
     flex-direction: row;
