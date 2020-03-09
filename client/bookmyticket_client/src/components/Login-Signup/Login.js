@@ -24,7 +24,10 @@ function Login() {
   const onSubmit = data => {
     console.log(data);
     axios
-      .post("https://bookmyticket-app-movies.herokuapp.com/login", data)
+      .post(
+        "https://bookmyticket-app-movies.herokuapp.com/userSignup/login",
+        data
+      )
       .then(res => {
         if (res.data === "Invalid password or Email") {
           alert(res.data);

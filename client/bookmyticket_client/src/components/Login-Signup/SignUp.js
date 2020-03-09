@@ -19,7 +19,10 @@ function SignUp() {
   const onSubmit = data => {
     console.log(data);
     axios
-      .post("https://bookmyticket-app-movies.herokuapp.com/add", data)
+      .post(
+        "https://bookmyticket-app-movies.herokuapp.com/userSignup/add",
+        data
+      )
       .then(res => {
         console.log(res.data);
         alert(res.data);
