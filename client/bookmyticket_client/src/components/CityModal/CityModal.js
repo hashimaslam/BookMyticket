@@ -4,7 +4,7 @@ import { MainContext } from "../App";
 const CityModal = props => {
   const maincontext = useContext(MainContext);
   const handleClose = city => {
-    fetch(`http://localhost:5000/api/view/${city}`)
+    fetch(`https://bookmyticket-app-movies.herokuapp.com/api/view/${city}`)
       .then(res => res.json())
       .then(data => {
         let result = data.data[0];
