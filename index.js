@@ -26,7 +26,6 @@ db.authenticate()
   });
 //Routes
 
-
 app.use("/api", apiRouter);
 app.use("/auth", authRouter);
 app.use("/userSignup", SignupRouter);
@@ -41,7 +40,7 @@ if (ENV === "production") {
     )
   );
   app.use((req, res) => {
-    res.send(
+    res.sendFile(
       path.join(__dirname, "../../client/bookmyticket_client/build/index.html")
     );
   });
