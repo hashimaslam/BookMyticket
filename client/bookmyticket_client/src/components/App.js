@@ -82,7 +82,6 @@ function App() {
             <Route path="/details/:movieid" component={MovieDetail} />
             <Route path="/bookticket/:movieid" component={SeatLayout} />
           </Switch>
-          {doRedirect()}
         </Router>
       </MainContext.Provider>
     </div>
