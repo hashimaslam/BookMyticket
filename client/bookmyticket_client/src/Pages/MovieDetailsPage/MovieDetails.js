@@ -120,7 +120,7 @@ const MovieDetail = props => {
                       {movie.release_date}
                     </p>
                     <p className="md-info-tag-small">
-                      {movie.runtime / 60} hrs
+                      {Math.ceil(movie.runtime / 60)} hrs
                     </p>
                   </div>
                 </div>
