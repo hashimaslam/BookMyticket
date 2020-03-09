@@ -1,0 +1,33 @@
+.widget-arrow {
+  width: 12px !important;
+  height: 12px !important;
+  font-weight: 200 !important;
+  transform: rotate(180deg);
+}
+
+.widget-arrow-rotate {
+  width: 13px !important;
+  height: 15px !important;
+  font-weight: 200 !important;
+  transform: rotate(0deg);
+}
+.filter-widget-title {
+  font-size: 14px;
+  font-weight: 400;
+  color: $color-font-black;
+}
+
+.filter-widget-card {
+  background-color: $color-white !important;
+  border-radius: 3px !important;
+  border: none !important;
+  transition: all 10s ease-out !important;
+  .filter-widget-head {
+    height: 50px !important;
+    padding: 15px !important;
+    transition: all 10s ease-out !important;
+  }
+  .filter-widget-body {
+    padding-top: 0px !important;
+  }
+}

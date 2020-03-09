@@ -1,16 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Header from "../../components/Header/Header";
 import ListWidget from "../../components/ListWidget/ListWidget";
 import PosterCard from "../../components/PosterCard/PosterCard";
 import Carousel from "../../components/Slider/Carousel";
 import PosterSlider from "../../components/SecondarySlider/PosterSlider";
+import { Link } from "react-router-dom";
+import { MainContext } from "../../components/App";
+
 const APIKEY = process.env.REACT_APP_API_KEY;
+
 // import img1 from "../../components/PosterCard/img1.png";
 // import img2 from "../../components/PosterCard/img2.png";
 // import img3 from "../../components/PosterCard/img3.png";
 
 const Home = () => {
   const [apiData, setApiData] = useState([]);
+  const [ready, setReady] = useState(false);
+  const maincontext = useContext(MainContext);
   useEffect(() => {
     fetch(
       `https://api.themoviedb.org/3/movie/now_playing?api_key=${APIKEY}&language=en-US&page=1&region=IN`
@@ -19,8 +25,10 @@ const Home = () => {
       .then(data => {
         let result = data.results.slice(0, 10);
         setApiData(result);
+        console.log(maincontext.state);
       });
-  });
+    setReady(true);
+  }, []);
   return (
     <div>
       <Header />
@@ -53,7 +61,10 @@ const Home = () => {
                 <h3 className="mb-lg-3 ml-lg-3 movies-wrapper-heading">
                   Movies
                 </h3>
-                <p className="anchor-tags">View All</p>
+                <Link to="/movies">
+                  {" "}
+                  <p className="anchor-tags">View All</p>{" "}
+                </Link>
                 <PosterSlider />
               </div>
             </div>
@@ -61,18 +72,19 @@ const Home = () => {
             <span className="title-sm-screen">
               <h3 className="ml-3 mt-2">Movies</h3>
               <p className="mr-3 mt-3" style={{ color: "blue" }}>
-                View All
+                <Link to="/movies"> View All</Link>
               </p>
             </span>
             <div className="list-item-scroll">
               {apiData.map((item, index) => {
                 return (
-                  <div className="card-wrap-first" key={index}>
+                  <div className="card-wrap-first" key={item.id}>
                     <div>
                       <PosterCard
                         img={item.poster_path}
                         title={item.title}
                         like={item.vote_average}
+                        ready={ready}
                       />
                       <h6>{item.title}</h6>
                     </div>
@@ -89,12 +101,13 @@ const Home = () => {
             <div className="list-item-scroll">
               {apiData.map((item, index) => {
                 return (
-                  <div className="card-wrap-first" key={index}>
+                  <div className="card-wrap-first" key={item.id}>
                     <div>
                       <PosterCard
                         img={item.poster_path}
                         title={item.title}
                         like={item.vote_average}
+                        ready={ready}
                       />
                       <h6>{item.title}</h6>
                     </div>

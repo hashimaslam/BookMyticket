@@ -1,14 +1,24 @@
-.city-icon-modal {
-  width: 80px;
-  height: 80px;
-  fill: $color-font-muted;
-  background-color: $color-font-muted;
-}
-.city-modal {
-  fill: $color-font-muted;
-}
 .city-modal-body {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
+  cursor: pointer;
+  .city-modal-wrapper {
+    .city-modal {
+      fill: $color-font-muted !important;
+    }
+    .city-modal-title {
+      font-size: 14px;
+      color: $color-font-muted;
+    }
+    &:hover {
+      .city-modal {
+        fill: $color-blue !important;
+      }
+    }
+  }
+}
+
+.city-modal-input {
+  font-size: 14px !important;
 }

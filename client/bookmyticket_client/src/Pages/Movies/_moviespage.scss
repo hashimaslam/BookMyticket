@@ -1,0 +1,36 @@
+.movie-listing-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.wrapper-title-nav {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+
+  .wrapper-title-small {
+    font-size: 18px;
+    color: $color-font-muted;
+    font-weight: 400;
+    cursor: pointer;
+    &:hover {
+      color: $color-blue;
+    }
+  }
+  .wrapper-title-large {
+    color: $color-font-black;
+    font-weight: 400;
+  }
+  .wrapper-title-blue {
+    font-size: 18px;
+    color: $color-blue;
+    font-weight: 400;
+    cursor: pointer;
+    &:hover {
+      color: $color-font-muted;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+.card-placeholder {
+  width: 20.5rem;
+  height: 370px;
+}
+
+@media only screen and (max-width: 800px) {
+  .card-placeholder {
+    width: 11rem;
+    height: 200px;
+  }
+}

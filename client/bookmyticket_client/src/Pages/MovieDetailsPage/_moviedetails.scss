@@ -1,0 +1,121 @@
+.movie-details-wrapper {
+  position: relative;
+  height: 230px;
+  .md-page-image-banner {
+    width: 100vw;
+    height: 100%;
+    filter: blur(1px);
+    -webkit-filter: blur(1px);
+  }
+  .md-page-image-overlay {
+    position: absolute;
+    // z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+  }
+}
+.md-ratings-bookticket {
+  height: 80px;
+  padding-top: 30px;
+  padding-bottom: 5px;
+  padding-right: 30px;
+  display: flex;
+  margin-left: 30%;
+  flex-direction: row;
+  justify-content: space-between;
+  .ticket-button {
+    width: 238px;
+    text-align: center;
+    cursor: pointer;
+    padding: 15px 40px;
+    font-size: 12px;
+    border-radius: 2px;
+    outline: 0;
+    border: none;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: inline-block;
+    color: $color-font-heading-white;
+    background-color: $color-blue;
+  }
+}
+.poster-image-wraper {
+  transform: translateY(-250px);
+  z-index: 9;
+  .md-poster-image {
+    width: 80%;
+    height: 70%;
+    margin-left: 10px;
+    z-index: 5;
+  }
+}
+.md-page-info-wrapper {
+  background-color: $color-white;
+}
+.md-info-title {
+  color: $color-font-heading-white;
+}
+.md-info-tag {
+  display: inline-block;
+  color: $color-font-heading-white;
+}
+.md-info-tag-small {
+  display: inline-block;
+  color: $color-font-heading-white;
+}
+.md-genre-tag {
+  border: 1px solid $color-font-heading-white;
+  color: $color-font-heading-white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 400;
+  //   margin-right: 10px;
+  display: inline-block;
+  //   margin-top: 10px;
+  cursor: pointer;
+}
+.md-page-info {
+  transform: translateY(-250px);
+}
+
+//summary
+.md-page-summary {
+  transform: translateY(-100px);
+}
+.summary-overview {
+  font-size: 14px;
+  color: $color-font-black;
+}
+.md-cast-image {
+  border-radius: 80px;
+  width: 100px;
+  height: 100px;
+}
+.cast-slider-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  .cast-name {
+    margin-bottom: 0 !important;
+    text-align: center;
+    font-size: 14px;
+    color: $color-green;
+  }
+  .cast-role {
+    margin-bottom: 0 !important;
+    text-align: center;
+    font-size: 12px;
+    color: $color-font-muted;
+  }
+  .cast-char {
+    margin-bottom: 0 !important;
+    text-align: center;
+    font-size: 14px;
+    color: $color-font-muted;
+  }
+}

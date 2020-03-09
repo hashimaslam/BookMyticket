@@ -4,6 +4,8 @@ import Image2 from "../../assets/images/image2.jpg";
 import Image3 from "../../assets/images/image3.jpg";
 import Image4 from "../../assets/images/image4.jpg";
 import Flickity from "react-flickity-component";
+import ReactPlaceholder from "react-placeholder";
+import "react-placeholder/lib/reactPlaceholder.css";
 const images = [Image1, Image2, Image3, Image4];
 
 const flickityOptions = {
@@ -12,7 +14,8 @@ const flickityOptions = {
   setGallerySize: false,
   autoPlay: true,
   pageDots: true,
-  lazyLoad: true
+  lazyLoad: true,
+  pauseAutoPlayOnHover: false
 };
 
 class Carousel extends React.Component {
@@ -42,12 +45,22 @@ class Carousel extends React.Component {
         <Flickity options={flickityOptions} className={"carousel"}>
           {images.map((item, index) => {
             return (
-              <div className="flickity-container" key={index}>
-                <img
-                  className="carousel-img"
-                  data-flickity-lazyload={item}
-                  alt="img"
-                />
+              <div key={index}>
+                <ReactPlaceholder
+                  showLoadingAnimation
+                  type="rect"
+                  ready={true}
+                  color="#E0E0E0"
+                  style={{ width: "768px", height: "300px" }}
+                >
+                  <div className="flickity-container">
+                    <img
+                      className="carousel-img"
+                      data-flickity-lazyload={item}
+                      alt="img"
+                    />
+                  </div>
+                </ReactPlaceholder>
               </div>
             );
           })}

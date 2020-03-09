@@ -1,19 +1,31 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 // import Form from "react-bootstrap/Form";
+import CityModal from "../CityModal/CityModal";
 import Button from "react-bootstrap/Button";
 // import FormControl from "react-bootstrap/FormControl";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import CityModal from "../CityModal/CityModal";
+import { MainContext } from "../App";
+import { useHistory } from "react-router-dom";
 // import Container from "react-bootstrap/Container";
 import Logo from "./Logo";
 
 const PrimaryNav = () => {
-  const [modal, setModal] = useState(false);
+  // const [modal, setModal] = useState(false);
+  const maincontext = useContext(MainContext);
+  const modalShow = maincontext.state.modalShow;
+  const history = useHistory();
+
   const handleModalClick = () => {
-    setModal(modal => !modal);
+    maincontext.dispatcher({ type: "Close Modal", payload: !modalShow });
+    console.log(modalShow);
+  };
+  const handleSignout = () => {
+    localStorage.clear();
+    sessionStorage.clear();
+    history.push("/login");
   };
   return (
     <div>
@@ -23,7 +35,7 @@ const PrimaryNav = () => {
         variant="dark"
         className="primary-nav"
       >
-        <Navbar.Brand href="#home" className="ml-lg-5">
+        <Navbar.Brand className="ml-lg-5">
           <Link to="/" style={{ textDecoration: "none" }}>
             {" "}
             <Logo />
@@ -52,25 +64,26 @@ const PrimaryNav = () => {
               className=" pr-lg-3 primary-link mt-sm-2"
               onClick={handleModalClick}
             >
-              City
+              {maincontext.state.city}
             </Nav.Link>
-            {modal ? <CityModal shows={modal} /> : null}
-            <Nav.Link className=" pr-lg-3">
+            <CityModal />
+            <div className=" pr-lg-3 py-sm-2">
               <NavDropdown
                 title="Hello!"
                 id="basic-nav-dropdown"
                 className="primary-link"
               >
-                <NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">action</NavDropdown.Item>
+                <NavDropdown.Item>Profile</NavDropdown.Item>
+                <NavDropdown.Item>action</NavDropdown.Item>
               </NavDropdown>
-            </Nav.Link>
+            </div>
           </Nav>
           <Nav className="mr-lg-5">
             <Button
               // variant="outline-light"
               size="sm"
               className="primary-button mr-lg-5"
+              onClick={handleSignout}
             >
               Sign Out
             </Button>

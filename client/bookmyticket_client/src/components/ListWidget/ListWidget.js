@@ -1,28 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
+import { MainContext } from "../App";
 
 const ListWidget = () => {
+  const maincontext = useContext(MainContext);
+  const items = maincontext.state.items.slice(0, 7);
   return (
     <>
-      <div className="left-widget">
-        <p className="widget-title">Terance</p>
-        <p className="widget-mute">Movie</p>
-      </div>
-      <div className="left-widget">
-        <p className="widget-title">Terance</p>
-        <p className="widget-mute">Movie</p>
-      </div>
-      <div className="left-widget">
-        <p className="widget-title">Terance</p>
-        <p className="widget-mute">Movie</p>
-      </div>
-      <div className="left-widget">
-        <p className="widget-title">Terance</p>
-        <p className="widget-mute">Movie</p>
-      </div>
-      <div className="left-widget">
-        <p className="widget-title">Terance</p>
-        <p className="widget-mute">Movie</p>
-      </div>
+      {items.map(item => {
+        return (
+          <div className="left-widget" key={item.id}>
+            <p className="widget-title">{item.title}</p>
+            <p className="widget-mute">Movie</p>
+          </div>
+        );
+      })}
     </>
   );
 };
