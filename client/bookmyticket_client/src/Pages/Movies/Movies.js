@@ -33,7 +33,7 @@ const Movies = () => {
       <Header />
       <Carousel />
       <section className="movies-page-main-wrapper">
-        <div className="container-fluid mt-5 pt-3 pb-5 pr-5 pl-5 ">
+        <div className="container-fluid mt-5 pt-3 pb-5 pr-lg-5 pl-lg-5 ">
           <div className="wrapper-title-nav ml-3 mb-3 ">
             <h2 className="wrapper-title-large">Movies</h2>
             <p
@@ -61,7 +61,7 @@ const Movies = () => {
             <div className="col-sm-3">
               <FilterWidget />
             </div>
-            <div className="col-sm-9 pr-3 pl-2">
+            <div className="col-sm-9 pr-lg-3 pl-lg-2">
               <div className="movie-listing-grid ">
                 {loading && (
                   <div class="spinner-border text-danger" role="status">

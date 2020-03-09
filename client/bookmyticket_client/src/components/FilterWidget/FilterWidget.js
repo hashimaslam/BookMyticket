@@ -169,7 +169,7 @@ const FilterWidget = () => {
     }
   };
   return (
-    <div>
+    <div className="filter-widget-left">
       <div>
         {/* Language Widget Starts */}
         <Accordion defaultActiveKey="0">

@@ -6,6 +6,7 @@ import Tabs from "react-bootstrap/Tabs";
 import { Link } from "react-router-dom";
 import Carousel from "react-multi-carousel";
 import "semantic-ui-css/semantic.min.css";
+import noimg from "../../assets/images/noimg.png";
 import "react-multi-carousel/lib/styles.css";
 const MovieDetail = props => {
   const responsive = {
@@ -66,7 +67,7 @@ const MovieDetail = props => {
         />
         <div className="md-page-image-overlay"></div>
         <div className="md-ratings-bookticket">
-          <h2>Vote Count: {movie.vote_count}</h2>
+          <h2 className="md-vote-count">Vote Count: {movie.vote_count}</h2>
           <Link to={`/bookticket/${movie.id}`}>
             <button className="ticket-button">Book Tickets</button>
           </Link>
@@ -74,7 +75,7 @@ const MovieDetail = props => {
         <div className="md-page-info-wrapper">
           {/* conatiner starts */}
           <div className="conatiner-fluid">
-            <div className="row">
+            <div className="row mx-0">
               <div className="col-sm-3">
                 <div className="poster-image-wraper">
                   <img
@@ -83,7 +84,7 @@ const MovieDetail = props => {
                   />
                 </div>
               </div>
-              <div className="col-sm-6">
+              <div className="col-sm-6 summary-wrapper">
                 {/* info-part-starts here */}
                 <div className="md-page-info">
                   <div>
@@ -151,10 +152,18 @@ const MovieDetail = props => {
                                     key={item.credit_id}
                                     className="cast-slider-wrapper"
                                   >
-                                    <img
-                                      className="md-cast-image"
-                                      src={`http://image.tmdb.org/t/p/w154/${item.profile_path}`}
-                                    />
+                                    {item.profile_path ? (
+                                      <img
+                                        className="md-cast-image"
+                                        src={`http://image.tmdb.org/t/p/w154/${item.profile_path}`}
+                                      />
+                                    ) : (
+                                      <img
+                                        src={noimg}
+                                        className="md-cast-image"
+                                      />
+                                    )}
+
                                     <p className="cast-name">{item.name}</p>
                                     <p className="text-muted cast-role">
                                       Actor As
@@ -186,10 +195,17 @@ const MovieDetail = props => {
                                     key={item.credit_id}
                                     className="cast-slider-wrapper"
                                   >
-                                    <img
-                                      className="md-cast-image"
-                                      src={`http://image.tmdb.org/t/p/w154/${item.profile_path}`}
-                                    />
+                                    {item.profile_path ? (
+                                      <img
+                                        className="md-cast-image"
+                                        src={`http://image.tmdb.org/t/p/w154/${item.profile_path}`}
+                                      />
+                                    ) : (
+                                      <img
+                                        src={noimg}
+                                        className="md-cast-image"
+                                      />
+                                    )}
                                     <p className="cast-name">{item.name}</p>
 
                                     <p className="cast-char">{item.job}</p>
@@ -215,12 +231,15 @@ const MovieDetail = props => {
                 </div>
               </div>
               <div className="col-sm-3 mt-3">
-                <img src="https://tpc.googlesyndication.com/simgad/16660177321979173874" />
+                <img
+                  src="https://tpc.googlesyndication.com/simgad/16660177321979173874"
+                  className="md-ad"
+                />
               </div>
             </div>
           </div>
           {/* Conatiner ends here */}
-          <div className="recomended-movies mt-5 px-5">
+          <div className="recomended-movies mt-5 px-lg-5">
             <h3>Movies you may like</h3>
             <PosterSlider
               number={4}

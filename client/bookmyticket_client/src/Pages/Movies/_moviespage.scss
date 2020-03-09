@@ -34,3 +34,38 @@
     }
   }
 }
+
+@media only screen and (max-width: 800px) {
+  .wrapper-title-nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    margin: 0 auto;
+    width: 90vw;
+
+    .wrapper-title-small {
+      font-size: 14px;
+      color: $color-font-muted;
+      font-weight: 400;
+      cursor: pointer;
+      &:hover {
+        color: $color-blue;
+      }
+    }
+    .wrapper-title-large {
+      color: $color-font-black;
+      font-size: 18px;
+      font-weight: 400;
+    }
+    .wrapper-title-blue {
+      font-size: 14px;
+      color: $color-blue;
+      font-weight: 400;
+      cursor: pointer;
+      &:hover {
+        color: $color-font-muted;
+      }
+    }
+  }
+}

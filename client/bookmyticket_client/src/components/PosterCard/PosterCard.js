@@ -22,7 +22,7 @@ const PosterCard = props => {
             {props.img ? (
               <img
                 className="card-img-top"
-                src={`http://image.tmdb.org/t/p/w500/${props.img}`}
+                src={`http://image.tmdb.org/t/p/w342/${props.img}`}
                 alt="image"
               />
             ) : (

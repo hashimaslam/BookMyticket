@@ -31,3 +31,9 @@
     padding-top: 0px !important;
   }
 }
+
+@media only screen and (max-width: 800px) {
+  .filter-widget-left {
+    display: none;
+  }
+}

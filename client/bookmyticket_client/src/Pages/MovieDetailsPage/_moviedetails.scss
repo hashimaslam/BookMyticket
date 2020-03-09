@@ -53,6 +53,28 @@
     z-index: 5;
   }
 }
+//Media Queries
+@media only screen and(max-width:800px) {
+  .poster-image-wraper {
+    display: none;
+  }
+  .md-ad {
+    display: none;
+  }
+  .md-ratings-bookticket {
+    padding-top: 10px;
+    margin-left: 10px;
+  }
+
+  .summary-wrapper {
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+    width: 90vw !important;
+  }
+  .md-cast-image {
+    margin: 0 auto !important;
+  }
+}
 .md-page-info-wrapper {
   background-color: $color-white;
 }
@@ -95,11 +117,12 @@
   border-radius: 80px;
   width: 100px;
   height: 100px;
+  margin: 0 auto;
 }
 .cast-slider-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: center !important;
   .cast-name {
     margin-bottom: 0 !important;
     text-align: center;

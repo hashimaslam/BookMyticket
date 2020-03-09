@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Smap from "./Smap";
 const SeatLayout = props => {
+  const [movie, setMovie] = useState([]);
   const movieId = props.match.params.movieid;
   const history = useHistory();
   const handlePrevArrow = () => {
     history.push(`/details/${movieId}`);
   };
+  useEffect(() => {
+    fetch(
+      `https://api.themoviedb.org/3/movie/${movieId}?api_key=8360d0e72a693c7b24f696ce1b7e6268&language=en-US`
+    )
+      .then(res => res.json())
+      .then(data => {
+        setMovie(data);
+        console.log(data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
   return (
     <div>
       <header className="bk-header">
@@ -34,7 +48,7 @@ const SeatLayout = props => {
             </svg>
           </span>
           <div className="bk-header-title-wrapper p-3 ">
-            <p className="bk-header-title  m-0 pb-1">Baaghi 3 UA</p>
+            <p className="bk-header-title  m-0 pb-1">{movie.title} UA</p>
             <p className="bk-header-thname">Carnival Mall</p>
           </div>
         </div>
