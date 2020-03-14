@@ -1,41 +1,8 @@
-import React, { useState, useContext, useEffect } from "react";
-import Accordion from "react-bootstrap/Accordion";
-import { useAccordionToggle } from "react-bootstrap/AccordionToggle";
-import Card from "react-bootstrap/Card";
-import arrowimg from "../../assets/images/uparrow.png";
+import React, { useState, useEffect, useContext } from "react";
+import { MainContext } from "../../components/App";
+import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
-import { MainContext } from "../App";
-
-function CustomToggle({ children, eventKey, name }) {
-  const [dummy, setDummy] = useState(true);
-  const decoratedOnClick = useAccordionToggle(eventKey, () => setDummy(!dummy));
-
-  return (
-    <div onClick={decoratedOnClick}>
-      <div className={dummy}>
-        <span>
-          {/* <FontAwesomeIcon
-            icon={faAngleUp}
-            className="widget-arrow"
-            size="2x"
-          /> */}
-          <img
-            src={arrowimg}
-            className={dummy ? "widget-arrow-rotate " : "widget-arrow"}
-          />
-        </span>
-        <span
-          className={`filter-widget-title ml-3 ${
-            dummy ? "text-primary" : "text-dark"
-          }`}
-        >
-          {name}
-        </span>
-      </div>
-    </div>
-  );
-}
-const FilterWidget = () => {
+const FilterPage = props => {
   const maincontext = useContext(MainContext);
   const state = maincontext.state.items;
 
@@ -168,85 +135,109 @@ const FilterWidget = () => {
       console.log(language);
     }
   };
+  const handleApply = () => {
+    maincontext.dispatcher({ type: "Sm Filter" });
+  };
   return (
-    <div className="filter-widget-left">
-      <div>
-        {/* Language Widget Starts */}
-        <Accordion defaultActiveKey="0">
-          <Card className="filter-widget-card">
-            <div className="filter-widget-head">
-              <CustomToggle eventKey="0" name="Select Language"></CustomToggle>
-            </div>
-            <Accordion.Collapse eventKey="0">
-              <Card.Body className="filter-widget-body">
-                <Form.Check type="checkbox">
-                  <Form.Check.Input
-                    type="checkbox"
-                    onChange={() => handleEnChange("en")}
-                    checked={enchecked}
-                  />
-                  <Form.Check.Label className="ml-2 mb-2">
-                    English
-                  </Form.Check.Label>
-                </Form.Check>
-                <Form.Check type="checkbox">
-                  <Form.Check.Input
-                    type="checkbox"
-                    onChange={() => handleTaChange("ta")}
-                    checked={tachecked}
-                  />
-                  <Form.Check.Label className="ml-2 mb-2">
-                    Tamil
-                  </Form.Check.Label>
-                </Form.Check>
-                <Form.Check type="checkbox">
-                  <Form.Check.Input
-                    type="checkbox"
-                    checked={kachecked}
-                    onChange={() => handleKaChange("kn")}
-                  />
-                  <Form.Check.Label className="ml-2 mb-2">
-                    Kannada
-                  </Form.Check.Label>
-                </Form.Check>
-                <Form.Check type="checkbox">
-                  <Form.Check.Input
-                    type="checkbox"
-                    checked={hichecked}
-                    onChange={() => handleHiChange("hi")}
-                  />
-                  <Form.Check.Label className="ml-2 mb-2">
-                    Hindi
-                  </Form.Check.Label>
-                </Form.Check>
-                <Form.Check type="checkbox">
-                  <Form.Check.Input
-                    type="checkbox"
-                    checked={techecked}
-                    onChange={() => handleTeChange("te")}
-                  />
-                  <Form.Check.Label className="ml-2 mb-2">
-                    Telugu
-                  </Form.Check.Label>
-                </Form.Check>
-                <Form.Check type="checkbox">
-                  <Form.Check.Input
-                    type="checkbox"
-                    checked={mlchecked}
-                    onChange={() => handleMlChange("ml")}
-                  />
-                  <Form.Check.Label className="ml-2 mb-2">
-                    Malayalam
-                  </Form.Check.Label>
-                </Form.Check>
-              </Card.Body>
-            </Accordion.Collapse>
-          </Card>
-        </Accordion>
+    <div className="filterpage">
+      <div className="fp-header-wrapper">
+        <div className="fp-header-container">
+          <div className="fp-header">
+            {" "}
+            <span
+              className="fp-header-buttons"
+              onClick={() => props.handlemodal()}
+            >
+              Close
+            </span>
+            <span className="fp-header-title">Filters</span>
+            <span
+              className="fp-header-buttons"
+              onClick={() => props.handlemodal()}
+            >
+              Reset
+            </span>
+          </div>
+        </div>
       </div>
-      {/* Language Widget Ends */}
+      {/* filter starts here */}
+      <div className="fp-filter-container">
+        <div className="fp-filter-label">Languages</div>
+        <div className="fp-filter-movies-list">
+          <div className="fp-filter-items">
+            <p>Hindi</p>
+            <input
+              className="mr-0"
+              type="checkbox"
+              aria-label="Checkbox for following text input"
+              onChange={() => handleHiChange("hi")}
+              checked={hichecked}
+            />
+          </div>
+          <div className="fp-filter-items">
+            <p>Telugu</p>
+            <input
+              className="mr-0"
+              type="checkbox"
+              aria-label="Checkbox for following text input"
+              onChange={() => handleTeChange("te")}
+              checked={techecked}
+            />
+          </div>
+          <div className="fp-filter-items">
+            <p>Kannada</p>
+            <input
+              className="mr-0"
+              type="checkbox"
+              aria-label="Checkbox for following text input"
+              onChange={() => handleKaChange("ka")}
+              checked={kachecked}
+            />
+          </div>
+          <div className="fp-filter-items">
+            <p>English</p>
+            <input
+              className="mr-0"
+              type="checkbox"
+              aria-label="Checkbox for following text input"
+              onChange={() => handleEnChange("en")}
+              checked={enchecked}
+            />
+          </div>
+          <div className="fp-filter-items">
+            <p>Malayalam</p>
+            <input
+              className="mr-0"
+              type="checkbox"
+              aria-label="Checkbox for following text input"
+              onChange={() => handleMlChange("ml")}
+              checked={mlchecked}
+            />
+          </div>
+          <div className="fp-filter-items">
+            <p>Tamil</p>
+            <input
+              className="mr-0"
+              type="checkbox"
+              aria-label="Checkbox for following text input"
+              onChange={() => handleTaChange("ta")}
+              checked={tachecked}
+            />
+          </div>
+        </div>
+      </div>
+      {/* filter conatiner ends here */}
+      <div className="fp-filters-button-container">
+        {" "}
+        <div
+          className="fp-filters-button-wrapper"
+          onClick={() => props.handlemodal()}
+        >
+          Apply
+        </div>
+      </div>
     </div>
   );
 };
 
-export default FilterWidget;
+export default FilterPage;

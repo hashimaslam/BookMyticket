@@ -41,7 +41,7 @@ class Carousel extends React.Component {
   // }
   render() {
     return (
-      <div className="py-3 carousel-wrapper">
+      <div className="py-lg-3 carousel-wrapper">
         <Flickity options={flickityOptions} className={"carousel"}>
           {images.map((item, index) => {
             return (

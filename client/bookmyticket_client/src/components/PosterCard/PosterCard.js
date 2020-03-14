@@ -12,7 +12,7 @@ const PosterCard = props => {
   }, [props.ready]);
   return (
     <div>
-      <Link to={`/details/${props.id}`}>
+      <Link to={`/details/${props.id}/${props.language}`}>
         <div className="card main-conatiner mb-3 ">
           <ReactPlaceholder
             showLoadingAnimation

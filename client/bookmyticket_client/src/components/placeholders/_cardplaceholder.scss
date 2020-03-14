@@ -8,4 +8,33 @@
     width: 11rem;
     height: 200px;
   }
+  .city-modal-place {
+    width: 80vw !important;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .cmodal-place-wrapper {
+      padding-left: 40px !important;
+      .cmodal-spinner {
+        width: 50px !important;
+        height: 50px !important;
+      }
+    }
+  }
+}
+
+.city-modal-place {
+  width: 650px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .cmodal-place-wrapper {
+    padding-left: 100px;
+    .cmodal-spinner {
+      width: 100px;
+      height: 100px;
+    }
+  }
 }

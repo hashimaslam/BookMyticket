@@ -10,7 +10,7 @@ const ListWidget = () => {
       {items.map(item => {
         return (
           <div className="left-widget" key={item.id}>
-            <Link to={`details/${item.moviesid}`}>
+            <Link to={`details/${item.moviesid}/${item.language}`}>
               <p className="widget-title">{item.title}</p>
             </Link>
             <p className="widget-mute">Movie</p>

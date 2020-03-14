@@ -7,6 +7,8 @@ import PosterSlider from "../../components/SecondarySlider/PosterSlider";
 import { Link } from "react-router-dom";
 import { MainContext } from "../../components/App";
 
+import LoadingBar from "react-top-loading-bar";
+
 const APIKEY = process.env.REACT_APP_API_KEY;
 
 // import img1 from "../../components/PosterCard/img1.png";
@@ -16,8 +18,10 @@ const APIKEY = process.env.REACT_APP_API_KEY;
 const Home = () => {
   const [apiData, setApiData] = useState([]);
   const [ready, setReady] = useState(false);
+  const [loadingBarProgress, setLoadingBarProgress] = useState(0);
   const maincontext = useContext(MainContext);
   useEffect(() => {
+    setLoadingBarProgress(30);
     fetch(
       `https://api.themoviedb.org/3/movie/now_playing?api_key=${APIKEY}&language=en-US&page=1&region=IN`
     )
@@ -25,6 +29,7 @@ const Home = () => {
       .then(data => {
         let result = data.results.slice(0, 10);
         setApiData(result);
+        setLoadingBarProgress(100);
         console.log(maincontext.state);
       });
     setReady(true);
@@ -32,6 +37,12 @@ const Home = () => {
   return (
     <div>
       <Header />
+      <LoadingBar
+        progress={loadingBarProgress}
+        height={3}
+        color="red"
+        // onLoaderFinished={() => this.onLoaderFinished(setLoadingBarProgress(0))}
+      />
       <Carousel />
       <section className="main-wrapper">
         <div className="container-fluid p-lg-4">
@@ -85,6 +96,7 @@ const Home = () => {
                         title={item.title}
                         like={item.vote_average}
                         ready={ready}
+                        id={item.id}
                       />
                       <h6>{item.title}</h6>
                     </div>
@@ -108,6 +120,7 @@ const Home = () => {
                         title={item.title}
                         like={item.vote_average}
                         ready={ready}
+                        id={item.id}
                       />
                       <h6>{item.title}</h6>
                     </div>

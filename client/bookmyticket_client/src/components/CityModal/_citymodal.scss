@@ -22,3 +22,9 @@
 .city-modal-input {
   font-size: 14px !important;
 }
+
+@media only screen and (max-width: 800px) {
+  .city-modal-body {
+    flex-wrap: wrap;
+  }
+}

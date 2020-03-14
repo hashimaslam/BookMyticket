@@ -46,15 +46,76 @@
 .poster-image-wraper {
   transform: translateY(-250px);
   z-index: 9;
+
   .md-poster-image {
     width: 80%;
     height: 70%;
     margin-left: 10px;
     z-index: 5;
+    position: relative;
   }
+}
+.play-button {
+  top: 0;
+  cursor: pointer;
+  margin-left: 90px;
+  margin-top: 150px;
+  z-index: 10;
+  position: absolute;
+  transition: svg 5s ease-in;
+  &:hover {
+    transform: scale(1.2);
+    svg {
+      fill: $color-font-heading-white;
+    }
+  }
+  svg {
+    margin: 0 auto !important;
+    fill: $color-nav-font;
+    font-weight: 10px;
+    width: 75px !important;
+    height: 75px !important;
+  }
+}
+.videos-wrapper {
+  display: none;
+}
+.video-frame-desktop {
+  width: 100%;
+  height: 300px;
 }
 //Media Queries
 @media only screen and(max-width:800px) {
+  .md-page-image-banner {
+    display: none;
+  }
+  .md-page-image-overlay {
+    display: none;
+  }
+  .videos-wrapper {
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    align-items: flex-start;
+    -webkit-overflow-scrolling: touch;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    .video-container {
+      border-radius: 10px;
+
+      height: 210px;
+      padding-left: 10px;
+      padding-top: 5px;
+      border-radius: 10px;
+      .video-frame {
+        border-radius: 10px;
+        width: 85vw !important;
+        height: 200px;
+      }
+    }
+  }
   .poster-image-wraper {
     display: none;
   }
@@ -64,6 +125,17 @@
   .md-ratings-bookticket {
     padding-top: 10px;
     margin-left: 10px;
+    .md-vote-count {
+      font-size: 20px;
+    }
+  }
+  .md-page-info {
+    transform: translateY(0px) !important;
+  }
+
+  //summary
+  .md-page-summary {
+    transform: translateY(0px) !important;
   }
 
   .summary-wrapper {
@@ -74,7 +146,32 @@
   .md-cast-image {
     margin: 0 auto !important;
   }
+  .md-info-title {
+    margin-top: 10px !important;
+    color: $color-font-black !important;
+  }
+  .md-info-tag {
+    display: inline-block;
+    color: $color-font-black !important;
+  }
+  .md-info-tag-small {
+    display: inline-block;
+    color: $color-font-black !important;
+  }
+  .md-genre-tag {
+    border: 1px solid $color-font-muted !important;
+    color: $color-font-muted !important;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 400;
+    //   margin-right: 10px;
+    display: inline-block;
+    //   margin-top: 10px;
+    cursor: pointer;
+  }
 }
+//media query ends
 .md-page-info-wrapper {
   background-color: $color-white;
 }

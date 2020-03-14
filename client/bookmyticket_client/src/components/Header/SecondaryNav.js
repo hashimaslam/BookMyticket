@@ -8,7 +8,7 @@ const SecondaryNav = () => {
         <Nav.Item as="li" className="ml-lg-5">
           <div className="py-sm-2 mr-lg-3 pl-3">
             <Link
-              className="secondary-link mt-sm-3"
+              className="secondary-link mt-sm-5 mr-sm-5"
               to="/movies"
               style={{ textDecoration: "none" }}
             >
@@ -17,7 +17,7 @@ const SecondaryNav = () => {
           </div>
         </Nav.Item>
         <Nav.Item as="li">
-          <div className="py-sm-2 mr-lg-3">
+          <div className="py-sm-2 mr-sm-5">
             <Link
               className="secondary-link"
               to="/sports"
@@ -28,7 +28,7 @@ const SecondaryNav = () => {
           </div>
         </Nav.Item>
         <Nav.Item as="li">
-          <div className="py-sm-2 mr-lg-3">
+          <div className="py-sm-2 mr-sm-5">
             <Link
               className="secondary-link"
               to="/events"

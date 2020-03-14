@@ -14,13 +14,17 @@ import MovieDetail from "../Pages/MovieDetailsPage/MovieDetails";
 import Login from "./Login-Signup/Login";
 import Signup from "./Login-Signup/SignUp";
 import SeatLayout from "../Pages/SeatLayout/SeatLayout";
+import FiltersPage from "../Pages/FiltersPage/FiltersPage";
 export const MainContext = React.createContext();
 const initialState = {
   modalShow: true,
+  modalVideo: false,
+  videoUrl: "L61p2uyiMSo",
   items: [],
   filteredItems: [],
   Upcoming: [],
   UpcomingFilter: [],
+  smfilter: false,
   ready: false,
   city: "city"
 };
@@ -51,6 +55,19 @@ const Reducer = (state, action) => {
         ready: true
       };
     }
+    case "Open Video": {
+      return {
+        ...state,
+        modalVideo: action.payload.modal,
+        videoUrl: action.payload.url
+      };
+    }
+    case "Sm Filter": {
+      return {
+        ...state,
+        smfilter: !state.smfilter
+      };
+    }
     default:
       return state;
   }
@@ -79,8 +96,9 @@ function App() {
             <Route path="/sports" component={Sports} />
             <Route path="/events" component={Events} />
             <Route path="/buzz" component={Buzz} />
-            <Route path="/details/:movieid" component={MovieDetail} />
+            <Route path="/details/:movieid/:language" component={MovieDetail} />
             <Route path="/bookticket/:movieid" component={SeatLayout} />
+            <Route path="/filterpage" component={FiltersPage} />
           </Switch>
           {doRedirect()}
         </Router>

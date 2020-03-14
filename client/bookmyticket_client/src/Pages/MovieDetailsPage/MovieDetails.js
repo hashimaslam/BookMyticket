@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Header from "../../components/Header/Header";
 import PosterSlider from "../../components/SecondarySlider/PosterSlider";
 import Tab from "react-bootstrap/Tab";
@@ -7,8 +7,16 @@ import { Link } from "react-router-dom";
 import Carousel from "react-multi-carousel";
 import "semantic-ui-css/semantic.min.css";
 import noimg from "../../assets/images/noimg.png";
+import altimg from "../../assets/images/altbackdp.jpeg";
 import "react-multi-carousel/lib/styles.css";
+import { MainContext } from "../../components/App";
+import LoadingBar from "react-top-loading-bar";
+import VideoModal from "../../components/VideoModal/VideoModal";
+
+import ModalVideo from "react-modal-video";
+
 const MovieDetail = props => {
+  const maincontext = useContext(MainContext);
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -29,16 +37,19 @@ const MovieDetail = props => {
   const [movie, setMovie] = useState([]);
   const [casts, setCast] = useState([]);
   const [crew, setCrew] = useState([]);
-
+  const [videos, setVideos] = useState([]);
+  const [id, setId] = useState(props.match.params.movieid);
+  const [lang, setlang] = useState(props.match.params.language);
+  const [loadingBarProgress, setLoadingBarProgress] = useState(0);
   useEffect(() => {
-    console.log(props.match.params.movieid);
-    let id = props.match.params.movieid;
+    setLoadingBarProgress(30);
     fetch(
       `https://api.themoviedb.org/3/movie/${id}?api_key=8360d0e72a693c7b24f696ce1b7e6268&language=en-US`
     )
       .then(res => res.json())
       .then(data => {
         setMovie(data);
+        setLoadingBarProgress(100);
         console.log(data);
       })
       .catch(err => {
@@ -53,18 +64,45 @@ const MovieDetail = props => {
         setCrew(data.crew);
       })
       .catch(err => console.log(err));
+    fetch(
+      `https://api.themoviedb.org/3/movie/${id}/videos?api_key=8360d0e72a693c7b24f696ce1b7e6268&language=${lang}`
+    )
+      .then(res => res.json())
+      .then(data => {
+        setVideos(data.results);
+      })
+      .catch(err => console.log(err));
     console.log("entered");
   }, []);
-
+  let modal = <VideoModal video={videos[0]} />;
   return (
     <div>
+      <LoadingBar progress={loadingBarProgress} height={3} color="red" />
+
       <Header />
+
       <div className="movie-details-wrapper">
         <img
           className="md-page-image-banner"
-          src={`http://image.tmdb.org/t/p/w500/${movie.backdrop_path}`}
+          src={
+            movie.backdrop_path
+              ? `http://image.tmdb.org/t/p/w500/${movie.backdrop_path}`
+              : altimg
+          }
           alt="imagebanner"
         />
+        <div className="videos-wrapper">
+          {videos.map(item => {
+            return (
+              <div className="video-container" key={item.id}>
+                <iframe
+                  className="video-frame"
+                  src={`https://www.youtube.com/embed/${item.key}`}
+                ></iframe>
+              </div>
+            );
+          })}
+        </div>
         <div className="md-page-image-overlay"></div>
         <div className="md-ratings-bookticket">
           <h2 className="md-vote-count">Vote Count: {movie.vote_count}</h2>
@@ -82,8 +120,10 @@ const MovieDetail = props => {
                     className="md-poster-image"
                     src={`http://image.tmdb.org/t/p/w500/${movie.poster_path}`}
                   />
+                  {modal}
                 </div>
               </div>
+
               <div className="col-sm-6 summary-wrapper">
                 {/* info-part-starts here */}
                 <div className="md-page-info">
