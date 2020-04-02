@@ -71,10 +71,10 @@ const MovieDetail = props => {
       .then(data => {
         setVideos(data.results);
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log("video not available"));
     console.log("entered");
   }, []);
-  let modal = <VideoModal video={videos[0]} />;
+  let modal = <VideoModal video={videos[0] ? videos[0] : ""} />;
   return (
     <div>
       <LoadingBar progress={loadingBarProgress} height={3} color="red" />
@@ -92,21 +92,27 @@ const MovieDetail = props => {
           alt="imagebanner"
         />
         <div className="videos-wrapper">
-          {videos.map(item => {
-            return (
-              <div className="video-container" key={item.id}>
-                <iframe
-                  className="video-frame"
-                  src={`https://www.youtube.com/embed/${item.key}`}
-                ></iframe>
-              </div>
-            );
-          })}
+          {videos ? (
+            videos.map(item => {
+              return (
+                <div className="video-container" key={item.id}>
+                  <iframe
+                    className="video-frame"
+                    src={`https://www.youtube.com/embed/${item.key}`}
+                  ></iframe>
+                </div>
+              );
+            })
+          ) : (
+            <div className="video-container">
+              <div className="video-frame"></div>
+            </div>
+          )}
         </div>
         <div className="md-page-image-overlay"></div>
         <div className="md-ratings-bookticket">
           <h2 className="md-vote-count">Vote Count: {movie.vote_count}</h2>
-          <Link to={`/bookticket/${movie.id}`}>
+          <Link to={`/theatres/${movie.id}`}>
             <button className="ticket-button">Book Tickets</button>
           </Link>
         </div>

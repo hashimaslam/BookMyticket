@@ -1,11 +1,15 @@
 .movie-details-wrapper {
   position: relative;
   height: 230px;
+
   .md-page-image-banner {
+    position: relative;
     width: 100vw;
     height: 100%;
-    filter: blur(1px);
-    -webkit-filter: blur(1px);
+    filter: blur(5px);
+    // -webkit-filter: blur(20px);
+    transform: scale(1.5);
+    z-index: -1;
   }
   .md-page-image-overlay {
     position: absolute;

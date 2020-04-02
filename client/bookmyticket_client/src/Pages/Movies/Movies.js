@@ -7,6 +7,7 @@ import PosterCard from "../../components/PosterCard/PosterCard";
 import LoadingBar from "react-top-loading-bar";
 import { Link } from "react-router-dom";
 import Filterspage from "../FiltersPage/FiltersPage";
+import FadeIn from "react-fade-in";
 import Mymodal from "./Mymodal";
 const Movies = () => {
   const maincontext = useContext(MainContext);
@@ -90,37 +91,41 @@ const Movies = () => {
                 ) : upcoming ? (
                   maincontext.state.UpcomingFilter.map(item => {
                     return (
-                      <div className="mb-sm-3 mr-4" key={item.id}>
-                        <PosterCard
-                          img={item.poster_path}
-                          title={item.title}
-                          language={item.original_language}
-                          vote={item.vote_count}
-                          like={item.vote_average}
-                          ready={maincontext.state.ready}
-                          id={item.id}
-                        />
-                      </div>
+                      <FadeIn>
+                        <div className="mb-sm-3 mr-4" key={item.id}>
+                          <PosterCard
+                            img={item.poster_path}
+                            title={item.title}
+                            language={item.original_language}
+                            vote={item.vote_count}
+                            like={item.vote_average}
+                            ready={maincontext.state.ready}
+                            id={item.id}
+                          />
+                        </div>
+                      </FadeIn>
                     );
                   })
                 ) : (
                   maincontext.state.filteredItems.map(item => {
                     return (
-                      <div className="mb-3 mr-4" key={item.id}>
-                        <PosterCard
-                          img={item.poster_path}
-                          title={item.title}
-                          language={item.language}
-                          vote={item.vote_count}
-                          like={item.vote_average}
-                          ready={maincontext.state.ready}
-                          id={item.moviesid}
-                        />
-                        <div className="title-sm-device">
-                          {" "}
-                          <h6>{item.title}</h6>
+                      <FadeIn>
+                        <div className="mb-3 mr-4" key={item.id}>
+                          <PosterCard
+                            img={item.poster_path}
+                            title={item.title}
+                            language={item.language}
+                            vote={item.vote_count}
+                            like={item.vote_average}
+                            ready={maincontext.state.ready}
+                            id={item.moviesid}
+                          />
+                          <div className="title-sm-device">
+                            {" "}
+                            <h6>{item.title}</h6>
+                          </div>
                         </div>
-                      </div>
+                      </FadeIn>
                     );
                   })
                 )}

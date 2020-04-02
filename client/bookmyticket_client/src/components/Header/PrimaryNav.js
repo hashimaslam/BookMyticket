@@ -25,6 +25,7 @@ const PrimaryNav = () => {
   const handleSignout = () => {
     localStorage.clear();
     sessionStorage.clear();
+    maincontext.dispatcher({ type: "Close Modal", payload: !modalShow });
     history.push("/login");
   };
   return (

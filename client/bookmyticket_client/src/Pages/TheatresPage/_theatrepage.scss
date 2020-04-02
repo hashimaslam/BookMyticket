@@ -1,0 +1,118 @@
+.tp-movie-details {
+  position: relative;
+  text-align: left;
+  display: inline-block;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  background: #333545;
+  color: #999;
+  z-index: 3;
+  .fix-height-div {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+
+    padding-top: 30px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    .tp-movieinfo-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      .tp-info-title {
+        font-size: 36px;
+        color: $color-font-heading-white;
+        font-weight: 400;
+        line-height: 20px;
+      }
+    }
+  }
+}
+//Date pciker
+.tp-date-picker {
+  height: 80px;
+  transform: translateY(-10px);
+  background-color: $color-white;
+  .date-picker-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    padding-left: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    .date-picker-container {
+      margin-right: 10px;
+      display: flex;
+      cursor: pointer;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      // padding-top: 2px;
+      // padding-bottom: 2px;
+      padding-left: 10px;
+      padding-right: 10px;
+      border: 1px solid #d3d0d0;
+      border-radius: 5px;
+
+      .tp-date {
+        font-size: 25px;
+        font-weight: 400;
+        color: $color-font-muted;
+      }
+      .tp-month {
+        color: $color-font-muted;
+      }
+    }
+  }
+}
+.date-picker-container-blue {
+  background-color: $color-blue;
+  .tp-date {
+    font-size: 25px;
+    font-weight: 400;
+    color: $color-font-heading-white !important;
+  }
+  .tp-month {
+    color: $color-font-heading-white !important;
+  }
+}
+.date-picker-container:hover {
+  background-color: $color-blue;
+  .tp-date {
+    color: $color-font-heading-white !important;
+  }
+  .tp-month {
+    color: $color-font-heading-white !important;
+  }
+}
+
+//Theatres list
+.tp-th-list {
+  height: 500px;
+  width: 100%;
+  // border: 1px solid black;
+  .tp-th-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    width: 100%;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: $color-white;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid $color-main-wrapper;
+    
+    .tp-th-name {
+      font-size: 25px;
+      font-weight: 400;
+      color: $color-font-muted;
+      line-height: 16px;
+      letter-spacing: 1px;
+    }
+  }
+}

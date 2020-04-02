@@ -12,13 +12,18 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "flickity": "^2.2.1",
+    "formik": "^2.1.4",
     "jquery": "^3.4.1",
     "node-sass": "^4.13.1",
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.12.0",
+    "react-fade": "^1.1.1",
+    "react-fade-in": "^0.1.8",
     "react-flickity-component": "^3.5.0",
     "react-hook-form": "^4.10.1",
+    "react-loading-overlay": "^1.0.1",
+    "react-lottie": "^1.2.3",
     "react-modal-video": "^1.2.3",
     "react-multi-carousel": "^2.5.2",
     "react-placeholder": "^4.0.0",
@@ -33,7 +38,8 @@
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.2",
     "slick-carousel": "^1.8.1",
-    "webfontloader": "^1.6.28"
+    "webfontloader": "^1.6.28",
+    "yup": "^0.28.3"
   },
   "scripts": {
     "start": "react-scripts start",

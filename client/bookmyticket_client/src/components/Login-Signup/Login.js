@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-// import FormControl from "react-bootstrap/FormControl";
+
 import Form from "react-bootstrap/Form";
 import Navbar from "react-bootstrap/Navbar";
-// import Nav from "react-bootstrap/Nav";
+
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -12,124 +12,205 @@ import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Logo from "../Header/Logo";
 import desktopImage from "../../assets/images/back.jpg";
-// import mobileImage from "../../assets/images/image1.jpg";
-// import contactus from "../../assets/images/contactus.png";
+import Lottie from "react-lottie";
+import FadeIn from "react-fade-in";
+import * as legoLoader from "../../assets/legoLoader.json";
+import * as checkeDone from "../../assets/checkeDone.json";
 import axios from "axios";
-
+import { useFormik } from "formik";
+import Alert from "react-bootstrap/Alert";
+import LoadingOverlay from "react-loading-overlay";
+import * as Yup from "yup";
 function Login() {
   const history = useHistory();
   const { register, handleSubmit, errors } = useForm();
-  // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const onSubmit = data => {
-    console.log(data);
-    axios
-      .post(
-        "https://bookmyticket-app-movies.herokuapp.com/userSignup/login",
-        data
-      )
-      .then(res => {
-        if (res.data === "Invalid password or Email") {
-          alert(res.data);
-        } else {
-          console.log(res);
-          alert("successfully login");
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: legoLoader.default,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
+  const defaultOptions2 = {
+    loop: false,
+    autoplay: true,
+    animationData: checkeDone.default,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: ""
+    },
+    validationSchema: Yup.object({
+      password: Yup.string()
+        .min(6, `Password has to be longer than 6 characters`)
+        .max(10, "Password Must be within 6 to 8 characters")
+        .required("Password is required!"),
+      email: Yup.string()
+        .email("Invalid email address")
+        .required("Email is Required")
+    }),
+    onSubmit: values => {
+      setLoading(prev => !prev);
+      console.log(values);
+      let data = JSON.stringify(values, null, 2);
+      axios
+        .post(
+          "https://bookmyticket-app-movies.herokuapp.com/userSignup/login",
+          values
+        )
+        .then(res => {
+          if (res.data === "Invalid password or Email") {
+            setLoading(prev => !prev);
+            setShow(prev => !prev);
+          } else {
+            console.log(res);
+            setLoading(prev => !prev);
+            localStorage.setItem("user", JSON.stringify(res.data));
+            history.push("/");
+          }
+        })
+        .catch(err => {
+          setLoading(prev => !prev);
+          setShow(prev => !prev);
+        });
+    }
+  });
+  const LoadingContent = props => {
+    return (
+      <>
+        {" "}
+        <FadeIn>
+          <div class="d-flex justify-content-center align-items-center">
+            <h1>Loading Your Shows</h1>
 
-          localStorage.setItem("user", JSON.stringify(res.data));
-          history.push("/");
-        }
-      })
-      .catch(err => {
-        console.log(err);
-        alert("incorrect username or password");
-      });
+            {props.loading ? (
+              <Lottie options={defaultOptions} height={120} width={120} />
+            ) : (
+              <Lottie options={defaultOptions2} height={120} width={120} />
+            )}
+          </div>
+        </FadeIn>
+      </>
+    );
   };
 
-  // const imageUrl = windowWidth >= 650 ? desktopImage : mobileImage;
-
-  // const handleWindowResize = () => {
-  //     setWindowWidth(window.innerWidth);
-  // };
-
-  // useEffect(() => {
-  //     window.addEventListener('resize', handleWindowResize);
-
-  //     return () => {
-  //         window.removeEventListener('resize', handleWindowResize);
-  //     }
-  // });
-
   return (
-    <div
-      style={{
-        backgroundImage: "url(" + desktopImage + ")",
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        width: "100%",
-        height: "625px"
-      }}
-    >
-      <Navbar
-        collapseOnSelect
-        expand="lg"
-        variant="dark"
-        className="primary-nav"
+    <>
+      <LoadingOverlay
+        active={loading}
+        spinner={<LoadingContent loading={loading} />}
       >
-        <Navbar.Brand href="" className="ml-lg-5">
-          <Logo />
-        </Navbar.Brand>
+        <div
+          style={{
+            backgroundColor: "black",
+            backgroundImage: "url(" + desktopImage + ")",
+            backgroundPosition: "center",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            width: "100%",
+            height: "100vh"
+          }}
+        >
+          <Alert
+            show={show}
+            onClose={() => setShow(prev => !prev)}
+            variant="danger"
+            dismissible
+          >
+            <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+            <p>
+              It looks Like you have entered wrong email or password ,Please try
+              register if you have not created an account yet
+            </p>
+          </Alert>
+          <Container>
+            <Row>
+              <Col className="mt-5" sm={6}>
+                <h1 class="display-4 text-danger">BookMyticket</h1>
+                <p className="text-white login-info">
+                  The one stop for all your entertainment, Booktickets, Explore
+                  Movies and What Not !!
+                </p>
+              </Col>
+              <Col></Col>
+              <Col className="mt-5" sm={4}>
+                <h1 className="text-white">Login Here!</h1>
+                <hr />
+                <div className="login-form-container">
+                  <Form onSubmit={formik.handleSubmit} noValidate>
+                    <Form.Group controlId="formBasicName">
+                      <Form.Label className="text-white">
+                        Email Address
+                      </Form.Label>
+                      <Form.Control
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="Email"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.email}
+                        isInvalid={formik.touched.email && formik.errors.email}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {formik.errors.email}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group controlId="formBasicName">
+                      <Form.Label className="text-white">Password</Form.Label>
+                      <Form.Control
+                        id="password"
+                        name="password"
+                        type="password"
+                        placeholder="password"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.password}
+                        isInvalid={
+                          formik.touched.password && formik.errors.password
+                        }
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {formik.errors.password}
+                      </Form.Control.Feedback>
+                    </Form.Group>
 
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav"></Navbar.Collapse>
-      </Navbar>
-
-      <Container>
-        <Row>
-          <Col></Col>
-          <Col></Col>
-          <Col className="mt-5">
-            <h1 className="text-white">Login Here!</h1>
-            <hr />
-            <Form onSubmit={handleSubmit(onSubmit)}>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label className="text-white">Email address</Form.Label>
-                <Form.Control
-                  type="email"
-                  name="email"
-                  placeholder="Enter email"
-                  ref={register({ required: true })}
-                />
-              </Form.Group>
-              {errors.email && alert("Please Enter Email!")}
-
-              <Form.Group controlId="formBasicPassword">
-                <Form.Label className="text-white">Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  ref={register({ required: true, minLength: 6 })}
-                />
-              </Form.Group>
-              {errors.password &&
-                alert("Password Required minimum 6 character")}
-
-              <Button variant="primary" type="submit">
-                Login
-              </Button>
-
-              <br />
-              <Link to="/signup">
-                <Button variant="primary" type="button" className="mt-2">
-                  RegisterHere!
-                </Button>
-              </Link>
-            </Form>
-          </Col>
-        </Row>
-      </Container>
-    </div>
+                    <span>
+                      <Button variant="danger" type="submit" className="mr-3">
+                        Login
+                      </Button>
+                      <p
+                        className="text-white m-0"
+                        style={{ display: "inline-block", fontSize: "16px" }}
+                      >
+                        or
+                      </p>
+                      <Link to="/signup">
+                        <Button
+                          variant="outline-danger"
+                          type="button"
+                          className="ml-3"
+                        >
+                          RegisterHere!
+                        </Button>
+                      </Link>
+                    </span>
+                  </Form>
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        </div>
+      </LoadingOverlay>
+    </>
   );
 }
 

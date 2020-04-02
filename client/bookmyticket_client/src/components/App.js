@@ -15,6 +15,7 @@ import Login from "./Login-Signup/Login";
 import Signup from "./Login-Signup/SignUp";
 import SeatLayout from "../Pages/SeatLayout/SeatLayout";
 import FiltersPage from "../Pages/FiltersPage/FiltersPage";
+import TheatresPage from "../Pages/TheatresPage/TheatresPage";
 export const MainContext = React.createContext();
 const initialState = {
   modalShow: true,
@@ -26,7 +27,8 @@ const initialState = {
   UpcomingFilter: [],
   smfilter: false,
   ready: false,
-  city: "city"
+  city: "city",
+  theatres: []
 };
 const Reducer = (state, action) => {
   switch (action.type) {
@@ -43,6 +45,9 @@ const Reducer = (state, action) => {
     }
     case "Set City": {
       return { ...state, city: action.payload };
+    }
+    case "Set Theatres": {
+      return { ...state, theatres: action.payload };
     }
     case "Filter Movie": {
       return { ...state, filteredItems: action.payload };
@@ -99,6 +104,7 @@ function App() {
             <Route path="/details/:movieid/:language" component={MovieDetail} />
             <Route path="/bookticket/:movieid" component={SeatLayout} />
             <Route path="/filterpage" component={FiltersPage} />
+            <Route path="/theatres/:movieid" component={TheatresPage} />
           </Switch>
           {doRedirect()}
         </Router>

@@ -27,11 +27,11 @@ const VideoModal = props => {
           maincontext.dispatcher({
             type: "Open Video",
             payload: {
-              url: props.video.key,
+              url: props.video.key ? props.video.key : "",
               modal: !maincontext.state.modalVideo
             }
           });
-          console.log(maincontext.state);
+          console.log(props.video.key);
         }}
       >
         <svg
@@ -76,10 +76,14 @@ S384,119.253,384,213.333S307.413,384,213.333,384z"
         }
       >
         <Modal.Body className="p-0">
-          <iframe
-            className="video-frame-desktop"
-            src={`https://www.youtube.com/embed/${maincontext.state.videoUrl}`}
-          ></iframe>
+          {maincontext.state.videoUrl ? (
+            <iframe
+              className="video-frame-desktop"
+              src={`https://www.youtube.com/embed/${maincontext.state.videoUrl}`}
+            ></iframe>
+          ) : (
+            <h2>Trailer is not out yet</h2>
+          )}
         </Modal.Body>
       </Modal>
     </div>

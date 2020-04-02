@@ -13,7 +13,9 @@ const CityModal = props => {
       .then(data => {
         let result = data.data[0];
         let city = result.city_name;
+        let theatres = result.theatres;
         maincontext.dispatcher({ type: "Set City", payload: city });
+        maincontext.dispatcher({ type: "Set Theatres", payload: theatres });
         let movies = [];
         result.theatres.map(item => {
           return item.movies.map(item => {
