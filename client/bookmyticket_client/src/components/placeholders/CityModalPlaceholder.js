@@ -2,6 +2,7 @@ import React from "react";
 import Spinner from "react-bootstrap/Spinner";
 import Lottie from "react-lottie";
 import * as tickets from "../../assets/tickets.json";
+import Bklogo from "../Header/bklogo";
 const defaultOptions = {
   loop: true,
   autoplay: true,
@@ -19,7 +20,8 @@ const CityModalPlaceholder = () => {
           variant="danger"
           className="cmodal-spinner"
         /> */}
-        <Lottie options={defaultOptions} height={300} width={300} />
+        {/* <Lottie options={defaultOptions} height={300} width={300} /> */}
+        <Bklogo animation={true} />
       </div>
     </div>
   );

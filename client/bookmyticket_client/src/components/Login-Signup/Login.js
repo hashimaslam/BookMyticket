@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import Form from "react-bootstrap/Form";
 import Navbar from "react-bootstrap/Navbar";
-
+import Bklogo from "../Header/bklogo";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -134,8 +134,18 @@ function Login() {
           <Container>
             <Row>
               <Col className="mt-5" sm={6}>
-                <h1 class="display-4 text-danger">BookMyticket</h1>
-                <p className="text-white login-info">
+                <span class="display-4 text-white">
+                  Book
+                  <Bklogo
+                    width={"60px"}
+                    height={"60px"}
+                    animation={false}
+                    margin={"0"}
+                    top={"10%"}
+                  />
+                  ticket
+                </span>
+                <p className="text-white login-info mt-2">
                   The one stop for all your entertainment, Booktickets, Explore
                   Movies and What Not !!
                 </p>

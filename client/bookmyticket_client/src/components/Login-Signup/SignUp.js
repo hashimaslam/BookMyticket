@@ -19,6 +19,8 @@ import LoadingOverlay from "react-loading-overlay";
 import Logo from "../Header/Logo";
 import axios from "axios";
 import { useFormik } from "formik";
+import Bklogo from "../Header/bklogo";
+
 import * as Yup from "yup";
 function SignUp() {
   const { register, handleSubmit, errors } = useForm();
@@ -150,8 +152,18 @@ function SignUp() {
             <Container>
               <Row>
                 <Col className="mt-5" sm={6}>
-                  <h1 class="display-4 text-danger">BookMyticket</h1>
-                  <p className="text-white login-info">
+                  <span class="display-4 text-white">
+                    Book
+                    <Bklogo
+                      width={"60px"}
+                      height={"60px"}
+                      animation={false}
+                      margin={"0"}
+                      top={"10%"}
+                    />
+                    ticket
+                  </span>
+                  <p className="text-white login-info mt-2">
                     The one stop for all your entertainment, Booktickets,
                     Explore Movies and What Not !!
                   </p>

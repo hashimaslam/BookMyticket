@@ -4,11 +4,11 @@
   height: 25px;
   .tckt {
     fill: #dd0f1b;
-    animation-name: fade;
-    animation-duration: 800ms;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
+    // animation-name: fade;
+    // animation-duration: 800ms;
+    // animation-timing-function: ease-in-out;
+    // animation-iteration-count: infinite;
+    // animation-direction: alternate;
   }
   //   @keyframes fade {
   //     from {
@@ -41,3 +41,37 @@
   font-size: 20px;
   color: $color-white;
 }
+
+//bk logo
+
+// display: block;
+// position: relative;
+// width: 100px;
+// height: 100px;
+// margin: 100px auto;
+.bk-logo-tckt {
+  fill: #dd0f1b;
+  animation-name: fade;
+  animation-duration: 800ms;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+.bk-logo-tckt-noanimation {
+  fill: #dd0f1b;
+}
+@keyframes fade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.4;
+  }
+}
+// .bk-logo-text {
+//   position: absolute;
+//   top: 6%;
+//   left: 4%;
+//   fill: #fff;
+//   z-index: 2;
+// }
