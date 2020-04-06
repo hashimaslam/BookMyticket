@@ -32,6 +32,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.1",
     "react-slick": "^0.25.2",
+    "react-spinners": "^0.8.1",
     "react-top-loading-bar": "^1.2.0",
     "react-youtube": "^7.9.0",
     "redux": "^4.0.5",

@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Smap from "./Smap";
+import { MainContext } from "../../components/App";
 const SeatLayout = props => {
   const [movie, setMovie] = useState([]);
   const movieId = props.match.params.movieid;
   const history = useHistory();
+  const maincontext = useContext(MainContext);
   const handlePrevArrow = () => {
-    history.push(`/details/${movieId}`);
+    history.push(`/theatres/${movieId}`);
   };
   useEffect(() => {
     fetch(
@@ -20,7 +22,8 @@ const SeatLayout = props => {
       .catch(err => {
         console.log(err);
       });
-  });
+    console.log(maincontext.state);
+  }, []);
   return (
     <div>
       <header className="bk-header">
@@ -49,17 +52,23 @@ const SeatLayout = props => {
           </span>
           <div className="bk-header-title-wrapper p-3 ">
             <p className="bk-header-title  m-0 pb-1">{movie.title} UA</p>
-            <p className="bk-header-thname">Carnival Mall</p>
+            <p className="bk-header-thname">{maincontext.state.thname}</p>
           </div>
         </div>
         <div className="mr-5 ">
-          <p className="bk-header-ticket mt-4 mr-5">2 Tickets</p>
+          <p className="bk-header-ticket mt-4 mr-5">
+            {maincontext.state.tickets} Tickets
+          </p>
         </div>
       </header>
       <div className="bk-movie-info ml-5 mt-2">
-        <p className="date-time mb-sm-2">Tuesday, March 03, 9:30AM</p>
+        <p className="date-time mb-sm-2">
+          Tuesday, {maincontext.state.date}, {maincontext.state.time}
+        </p>
         <span>
-          <button className="bk-time-active btn">9:30 AM</button>
+          <button className="bk-time-active btn">
+            {maincontext.state.time}
+          </button>
           <button className="bk-time btn ">12:00 PM</button>
         </span>
       </div>
@@ -67,6 +76,13 @@ const SeatLayout = props => {
       <div className="seat-layout-container">
         <Smap />
       </div>
+      {maincontext.state.showTicketsbtn ? (
+        <div className="book-ticket-btn-container">
+          <div className="book-ticket-btn">
+            <p>Book Tickets</p>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };

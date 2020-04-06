@@ -12,7 +12,7 @@ import "react-multi-carousel/lib/styles.css";
 import { MainContext } from "../../components/App";
 import LoadingBar from "react-top-loading-bar";
 import VideoModal from "../../components/VideoModal/VideoModal";
-
+import TicketsModal from "../TheatresPage/TicketsModal";
 import ModalVideo from "react-modal-video";
 
 const MovieDetail = props => {
@@ -112,9 +112,7 @@ const MovieDetail = props => {
         <div className="md-page-image-overlay"></div>
         <div className="md-ratings-bookticket">
           <h2 className="md-vote-count">Vote Count: {movie.vote_count}</h2>
-          <Link to={`/theatres/${movie.id}`}>
-            <button className="ticket-button">Book Tickets</button>
-          </Link>
+          <TicketsModal id={id} />
         </div>
         <div className="md-page-info-wrapper">
           {/* conatiner starts */}

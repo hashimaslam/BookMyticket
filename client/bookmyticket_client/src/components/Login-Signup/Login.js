@@ -7,13 +7,14 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
-import { useForm } from "react-hook-form";
+// import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
-import Logo from "../Header/Logo";
+// import Logo from "../Header/Logo";
 import desktopImage from "../../assets/images/back.jpg";
-import Lottie from "react-lottie";
+// import Lottie from "react-lottie";
 import FadeIn from "react-fade-in";
+import BarLoader from "react-spinners/BarLoader";
 import * as legoLoader from "../../assets/legoLoader.json";
 import * as checkeDone from "../../assets/checkeDone.json";
 import axios from "axios";
@@ -23,26 +24,10 @@ import LoadingOverlay from "react-loading-overlay";
 import * as Yup from "yup";
 function Login() {
   const history = useHistory();
-  const { register, handleSubmit, errors } = useForm();
+  // const { register, handleSubmit, errors } = useForm();
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: legoLoader.default,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice"
-    }
-  };
-  const defaultOptions2 = {
-    loop: false,
-    autoplay: true,
-    animationData: checkeDone.default,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice"
-    }
-  };
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -88,14 +73,21 @@ function Login() {
       <>
         {" "}
         <FadeIn>
-          <div class="d-flex justify-content-center align-items-center">
-            <h1>Loading Your Shows</h1>
-
-            {props.loading ? (
-              <Lottie options={defaultOptions} height={120} width={120} />
-            ) : (
-              <Lottie options={defaultOptions2} height={120} width={120} />
-            )}
+          <div className="d-flex flex-column  justify-content-center align-items-center">
+            <Bklogo
+              animation={false}
+              width="100px"
+              height="100px"
+              margin={"0px"}
+            />
+            <br />
+            <BarLoader
+              color={"#c02c39"}
+              loading={props.loading}
+              height={4}
+              width={200}
+            />
+            {/* <h1 className="text-center">Loading Your Shows...</h1> */}
           </div>
         </FadeIn>
       </>

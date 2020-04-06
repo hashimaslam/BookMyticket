@@ -3,12 +3,18 @@ import Header from "../../components/Header/Header";
 import { MainContext } from "../../components/App";
 import LoadingBar from "react-top-loading-bar";
 import FadeIn from "react-fade-in";
+import Bklogo from "../../components/Header/bklogo";
+import LoadingOverlay from "react-loading-overlay";
+import { useHistory } from "react-router-dom";
 const TheatresPage = props => {
   let datenow = new Date();
   const [movie, setMovie] = useState([]);
   const [casts, setCast] = useState([]);
-  const [loadingBarProgress, setLoadingBarProgress] = useState(0);
+  const [loading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(datenow.getDate());
+  const [loadingBarProgress, setLoadingBarProgress] = useState(0);
+  const history = useHistory();
+  const id = props.match.params.movieid;
   const maincontext = useContext(MainContext);
   let months = [
     "JAN",
@@ -37,26 +43,40 @@ const TheatresPage = props => {
   }
   useEffect(() => {
     setLoadingBarProgress(30);
-    const id = props.match.params.movieid;
+
     fetch(
       `https://api.themoviedb.org/3/movie/${id}?api_key=8360d0e72a693c7b24f696ce1b7e6268&language=en-US`
     )
       .then(res => res.json())
       .then(data => {
-        setLoadingBarProgress(100);
+        setLoading(prev => !prev);
         setMovie(data);
+        setLoadingBarProgress(100);
       })
       .catch(err => {
         console.log(err);
       });
+    let currdate = date[0] + " " + month[date[0]];
+    maincontext.dispatcher({ type: "Set Date", payload: currdate });
   }, []);
   const handleCurrDate = d => {
-    setSelectedDate(d);
-    console.log(maincontext.state.theatres);
+    setSelectedDate(d.date);
+    console.log(d.date + " " + d.month);
+    let newDate = d.date + " " + d.month;
+    maincontext.dispatcher({ type: "Set Date", payload: newDate });
+    console.log(maincontext.state);
+  };
+  const handleTime = (time, thName) => {
+    maincontext.dispatcher({ type: "Set Time", payload: time });
+    maincontext.dispatcher({ type: "Set ThName", payload: thName });
+    console.log(time, thName);
+    return history.push(`/bookticket/${id}`);
   };
   const theatres = maincontext.state.theatres;
+
   return (
     <div>
+      <LoadingBar progress={loadingBarProgress} height={3} color="red" />
       <Header />
 
       <div className="tp-movie-details">
@@ -94,7 +114,9 @@ const TheatresPage = props => {
                       ? "date-picker-container date-picker-container-blue"
                       : "date-picker-container"
                   }
-                  onClick={e => handleCurrDate(item)}
+                  onClick={() =>
+                    handleCurrDate({ date: item, month: month[index] })
+                  }
                   key={item}
                 >
                   <div className="tp-date">{item}</div>
@@ -116,17 +138,37 @@ const TheatresPage = props => {
                       <div className="tp-th-container" key={item.id}>
                         <div className="tp-th-name">{item.theatre_name}</div>
                         <div className="tp-timings">
-                          <button className="btn btn-outline-success mr-3">
-                            08:05 PM
+                          <button
+                            className="btn btn-outline-success mr-3"
+                            onClick={() =>
+                              handleTime("09:05 AM", item.theatre_name)
+                            }
+                          >
+                            09:05 AM
                           </button>
-                          <button className="btn btn-outline-success mr-3">
-                            01:05 PM
+                          <button
+                            className="btn btn-outline-success mr-3"
+                            onClick={() =>
+                              handleTime("11:30 AM", item.theatre_name)
+                            }
+                          >
+                            11:30 AM
                           </button>
-                          <button className="btn btn-outline-success mr-3">
-                            08:05 PM
+                          <button
+                            className="btn btn-outline-success mr-3"
+                            onClick={() =>
+                              handleTime("06:30 PM", item.theatre_name)
+                            }
+                          >
+                            06:30 PM
                           </button>
-                          <button className="btn btn-outline-success mr-3">
-                            08:05 PM
+                          <button
+                            className="btn btn-outline-success mr-3"
+                            onClick={() =>
+                              handleTime("10:30 PM", item.theatre_name)
+                            }
+                          >
+                            10:30 PM
                           </button>
                         </div>
                       </div>

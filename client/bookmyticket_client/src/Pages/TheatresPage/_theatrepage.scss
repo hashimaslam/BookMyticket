@@ -106,13 +106,32 @@
     align-items: center;
     justify-content: space-between;
     border-bottom: 2px solid $color-main-wrapper;
-    
+
     .tp-th-name {
       font-size: 25px;
       font-weight: 400;
       color: $color-font-muted;
       line-height: 16px;
       letter-spacing: 1px;
+    }
+  }
+}
+
+//Tickets Modal
+
+.tickets-count-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  .tickets-count {
+    font-size: 20px;
+    font-weight: 700;
+    padding: 10px 15px 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover {
+      background-color: $color-blue;
+      color: $color-font-heading-white;
     }
   }
 }

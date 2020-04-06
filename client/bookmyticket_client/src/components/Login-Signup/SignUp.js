@@ -16,10 +16,11 @@ import Lottie from "react-lottie";
 import FadeIn from "react-fade-in";
 import Alert from "react-bootstrap/Alert";
 import LoadingOverlay from "react-loading-overlay";
-import Logo from "../Header/Logo";
+// import Logo from "../Header/Logo";
 import axios from "axios";
 import { useFormik } from "formik";
 import Bklogo from "../Header/bklogo";
+import BarLoader from "react-spinners/BarLoader";
 
 import * as Yup from "yup";
 function SignUp() {
@@ -65,14 +66,21 @@ function SignUp() {
       <>
         {" "}
         <FadeIn>
-          <div class="d-flex justify-content-center align-items-center">
-            <h1>Cooking Your Content</h1>
-
-            {props.loading ? (
-              <Lottie options={defaultOptions} height={120} width={120} />
-            ) : (
-              <Lottie options={defaultOptions2} height={120} width={120} />
-            )}
+          <div className="d-flex flex-column  justify-content-center align-items-center">
+            <Bklogo
+              animation={false}
+              width="100px"
+              height="100px"
+              margin={"0px"}
+            />
+            <br />
+            <BarLoader
+              color={"#c02c39"}
+              loading={props.loading}
+              height={4}
+              width={200}
+            />
+            {/* <h1 className="text-center">Loading Your Shows...</h1> */}
           </div>
         </FadeIn>
       </>

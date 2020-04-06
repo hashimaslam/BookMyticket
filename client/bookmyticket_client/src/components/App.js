@@ -28,7 +28,12 @@ const initialState = {
   smfilter: false,
   ready: false,
   city: "city",
-  theatres: []
+  theatres: [],
+  tickets: "",
+  date: "",
+  time: "",
+  thname: "",
+  showTicketsbtn: false
 };
 const Reducer = (state, action) => {
   switch (action.type) {
@@ -51,6 +56,27 @@ const Reducer = (state, action) => {
     }
     case "Filter Movie": {
       return { ...state, filteredItems: action.payload };
+    }
+    case "Set Ticket": {
+      return { ...state, tickets: action.payload };
+    }
+    case "Set Time": {
+      return {
+        ...state,
+        time: action.payload
+      };
+    }
+    case "Set ThName": {
+      return {
+        ...state,
+        thname: action.payload
+      };
+    }
+    case "Set Date": {
+      return { ...state, date: action.payload };
+    }
+    case "Set ShowTicketsbtn": {
+      return { ...state, showTicketsbtn: action.payload };
     }
     case "Upcoming": {
       return {
