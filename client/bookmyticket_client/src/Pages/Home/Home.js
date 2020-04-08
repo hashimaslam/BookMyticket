@@ -97,6 +97,7 @@ const Home = () => {
                         like={item.vote_average}
                         ready={ready}
                         id={item.id}
+                        language={item.original_language}
                       />
                       <h6>{item.title}</h6>
                     </div>
