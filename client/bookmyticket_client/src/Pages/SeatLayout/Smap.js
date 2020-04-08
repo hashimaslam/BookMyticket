@@ -2,8 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { MainContext } from "../../components/App";
 
 const Samp = () => {
-  const itmes = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
-  const itmes2 = ["10", "11", "12", "13", "14", "15", "16", "18"];
+  // const itmes = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
+  // const itmes2 = ["10", "11", "12", "13", "14", "15", "16", "18"];
   const [seats, setSeats] = useState([]);
   const [booked, setBooked] = useState("");
   const [bookedSeats, setBookedSeats] = useState([]);
@@ -12,7 +12,7 @@ const Samp = () => {
   let tickets = maincontext.state.tickets;
   // let bookedSeats = [];
   useEffect(() => {
-    fetch("http://localhost:5000/api/seatmap")
+    fetch("https://bookmyticket-app-movies.herokuapp.com/api/seatmap")
       .then(res => res.json())
       .then(data => {
         console.log(data);
@@ -50,7 +50,6 @@ const Samp = () => {
         type: "Set ShowTicketsbtn",
         payload: true
       });
-
       //increment booked tickets array
     }
     if (count < tickets) {

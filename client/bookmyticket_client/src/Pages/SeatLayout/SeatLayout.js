@@ -41,7 +41,7 @@ const SeatLayout = props => {
     let requestArr = [];
     noOfSeats.map((item, index) => {
       requestArr.push(
-        fetch("http://localhost:5000/api/bookticket", {
+        fetch("https://bookmyticket-app-movies.herokuapp.com/api/bookticket", {
           method: "PUT",
           body: JSON.stringify(item),
           headers: {
