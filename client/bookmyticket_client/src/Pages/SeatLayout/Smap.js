@@ -12,27 +12,70 @@ const Samp = () => {
   let tickets = maincontext.state.tickets;
   // let bookedSeats = [];
   useEffect(() => {
-    fetch("http://bookmyticket-app-movies.herokuapp.com/api/seatmap")
+    fetch("http://localhost:5000/api/seatmap")
       .then(res => res.json())
       .then(data => {
         console.log(data);
-        setSeats(data.data);
+
+        setSeats(
+          data.data.sort(function(a, b) {
+            return a.id - b.id;
+          })
+        );
       })
       .catch(err => {
         console.log(err);
       });
   }, []);
+  useEffect(() => {
+    maincontext.dispatcher({ type: "Book Tickets", payload: bookedSeats });
+  }, [bookedSeats]);
+  useEffect(() => {
+    if (count > tickets) {
+      //dispatch
+      maincontext.dispatcher({
+        type: "Set ShowTicketsbtn",
+        payload: true
+      });
+      let newSeats = bookedSeats.filter((item, index) => {
+        return item != bookedSeats[bookedSeats.length - 1];
+      });
+      setBookedSeats(newSeats);
+      setCount(prev => prev - 1);
+      alert("pleasae deselect to select new seats");
+    }
+    if (count == tickets) {
+      //dispatch
+      maincontext.dispatcher({
+        type: "Set ShowTicketsbtn",
+        payload: true
+      });
+
+      //increment booked tickets array
+    }
+    if (count < tickets) {
+      //disptach with false
+      maincontext.dispatcher({
+        type: "Set ShowTicketsbtn",
+        payload: false
+      });
+      //increment booked tickets array
+    }
+  }, [count]);
   const handleSeats = (row, seat, price) => {
     let position;
     console.log(row, seat, price);
     if (bookedSeats.length == 0) {
-      setBookedSeats(prev => [...prev, row + seat]);
+      setBookedSeats(prev => [
+        ...prev,
+        { row: row, seat_no: seat, booked: true }
+      ]);
       setCount(prev => prev + 1);
+      console.log(tickets, "tickets");
     } else {
       bookedSeats.map((item, index) => {
-        if (item == row + seat) {
+        if (item.row == row && item.seat_no == seat) {
           position = index;
-          console.log(row + seat);
         }
       });
       console.log(position);
@@ -42,40 +85,20 @@ const Samp = () => {
         });
         setBookedSeats(newSeats);
         setCount(prev => prev - 1);
-        if (count != tickets) {
-          maincontext.dispatcher({
-            type: "Set ShowTicketsbtn",
-            payload: false
-          });
-        }
+
         console.log(`entered into ${position}`);
       } else {
-        if (count == tickets) {
-          maincontext.dispatcher({
-            type: "Set ShowTicketsbtn",
-            payload: true
-          });
-        } else {
-          setCount(prev => prev + 1);
-          setBookedSeats(prev => [...prev, row + seat]);
-        }
+        setCount(prev => prev + 1);
+        setBookedSeats(prev => [
+          ...prev,
+          { row: row, seat_no: seat, booked: true }
+        ]);
+        console.log(tickets, "tickets");
       }
     }
     console.log(bookedSeats);
   };
-  // const setClass = (item, row) => {
-  //   let classname = "seat-A available";
-  //   bookedSeats.map(seat => {
-  //     if (
-  //       Object.values(seat).join() == item &&
-  //       Object.keys(seat).join() == row
-  //     ) {
-  //       classname = "seat-A blocked";
-  //     }
-  //   });
-  //   console.log("entered into setclass");
-  //   return classname;
-  // };
+
   return (
     <>
       <div className="layout-block">
@@ -103,9 +126,17 @@ const Samp = () => {
                       <div
                         className="seat-row-A mr-1"
                         key={item.id}
-                        onClick={() => handleSeats("A", item.seat_no, 110.0)}
+                        onClick={
+                          !item.booked
+                            ? () => handleSeats("A", item.seat_no, 110.0)
+                            : null
+                        }
                       >
-                        {bookedSeats.includes(item.row + item.seat_no) ? (
+                        {bookedSeats.some(data => {
+                          return (
+                            data.row == item.row && data.seat_no == item.seat_no
+                          );
+                        }) ? (
                           <p className="seat-A blocked">{item.seat_no}</p>
                         ) : (
                           <p
@@ -127,15 +158,27 @@ const Samp = () => {
                       <div
                         className="seat-row-A mr-1"
                         key={index.id}
-                        onClick={() => handleSeats("A", item.seat_no, 110.0)}
+                        onClick={
+                          item.booked
+                            ? () => handleSeats("A", item.seat_no, 110.0)
+                            : null
+                        }
                       >
-                        <p
-                          className={
-                            item.booked ? "seat-A booked" : "seat-A available"
-                          }
-                        >
-                          {item.seat_no}
-                        </p>
+                        {bookedSeats.some(data => {
+                          return (
+                            data.row == item.row && data.seat_no == item.seat_no
+                          );
+                        }) ? (
+                          <p className="seat-A blocked">{item.seat_no}</p>
+                        ) : (
+                          <p
+                            className={
+                              item.booked ? "seat-A booked" : "seat-A available"
+                            }
+                          >
+                            {item.seat_no}
+                          </p>
+                        )}
                       </div>
                     );
                   })}
@@ -149,14 +192,30 @@ const Samp = () => {
                   <div className="smap-row-name mr-sm-3 mt-2">B</div>
                   {seats.slice(18, 26).map((item, index) => {
                     return (
-                      <div className="seat-row-A mr-1" key={item.id}>
-                        <p
-                          className={
-                            item.booked ? "seat-A booked" : "seat-A available"
-                          }
-                        >
-                          {item.seat_no}
-                        </p>
+                      <div
+                        className="seat-row-A mr-1"
+                        key={index.id}
+                        onClick={
+                          !item.booked
+                            ? () => handleSeats("B", item.seat_no, 110.0)
+                            : null
+                        }
+                      >
+                        {bookedSeats.some(data => {
+                          return (
+                            data.row == item.row && data.seat_no == item.seat_no
+                          );
+                        }) ? (
+                          <p className="seat-A blocked">{item.seat_no}</p>
+                        ) : (
+                          <p
+                            className={
+                              item.booked ? "seat-A booked" : "seat-A available"
+                            }
+                          >
+                            {item.seat_no}
+                          </p>
+                        )}
                       </div>
                     );
                   })}
@@ -166,14 +225,30 @@ const Samp = () => {
 
                   {seats.slice(26, 34).map((item, index) => {
                     return (
-                      <div className="seat-row-A mr-1" key={item.id}>
-                        <p
-                          className={
-                            item.booked ? "seat-A booked" : "seat-A available"
-                          }
-                        >
-                          {item.seat_no}
-                        </p>
+                      <div
+                        className="seat-row-A mr-1"
+                        key={item.id}
+                        onClick={
+                          !item.booked
+                            ? () => handleSeats("B", item.seat_no, 110.0)
+                            : null
+                        }
+                      >
+                        {bookedSeats.some(data => {
+                          return (
+                            data.row == item.row && data.seat_no == item.seat_no
+                          );
+                        }) ? (
+                          <p className="seat-A blocked">{item.seat_no}</p>
+                        ) : (
+                          <p
+                            className={
+                              item.booked ? "seat-A booked" : "seat-A available"
+                            }
+                          >
+                            {item.seat_no}
+                          </p>
+                        )}
                       </div>
                     );
                   })}
@@ -186,14 +261,30 @@ const Samp = () => {
                   <div className="smap-row-name mr-sm-3 mt-2">C</div>
                   {seats.slice(34, 42).map((item, index) => {
                     return (
-                      <div className="seat-row-A mr-1" key={item.id}>
-                        <p
-                          className={
-                            item.booked ? "seat-A booked" : "seat-A available"
-                          }
-                        >
-                          {item.seat_no}
-                        </p>
+                      <div
+                        className="seat-row-A mr-1"
+                        key={item.id}
+                        onClick={
+                          !item.booked
+                            ? () => handleSeats("C", item.seat_no, 110.0)
+                            : null
+                        }
+                      >
+                        {bookedSeats.some(data => {
+                          return (
+                            data.row == item.row && data.seat_no == item.seat_no
+                          );
+                        }) ? (
+                          <p className="seat-A blocked">{item.seat_no}</p>
+                        ) : (
+                          <p
+                            className={
+                              item.booked ? "seat-A booked" : "seat-A available"
+                            }
+                          >
+                            {item.seat_no}
+                          </p>
+                        )}
                       </div>
                     );
                   })}
@@ -203,8 +294,30 @@ const Samp = () => {
 
                   {seats.slice(42, 50).map((item, index) => {
                     return (
-                      <div className="seat-row-A mr-1" key={item.id}>
-                        <p className="seat-A available">{item.seat_no}</p>
+                      <div
+                        className="seat-row-A mr-1"
+                        key={item.id}
+                        onClick={
+                          !item.booked
+                            ? () => handleSeats("C", item.seat_no, 110.0)
+                            : null
+                        }
+                      >
+                        {bookedSeats.some(data => {
+                          return (
+                            data.row == item.row && data.seat_no == item.seat_no
+                          );
+                        }) ? (
+                          <p className="seat-A blocked">{item.seat_no}</p>
+                        ) : (
+                          <p
+                            className={
+                              item.booked ? "seat-A booked" : "seat-A available"
+                            }
+                          >
+                            {item.seat_no}
+                          </p>
+                        )}
                       </div>
                     );
                   })}
@@ -225,8 +338,30 @@ const Samp = () => {
                   <div className="smap-row-name mr-sm-3 mt-2">D</div>
                   {seats.slice(50, 58).map((item, index) => {
                     return (
-                      <div className="seat-row-A mr-1" key={item.id}>
-                        <p className="seat-A available">{item.seat_no}</p>
+                      <div
+                        className="seat-row-A mr-1"
+                        key={item.id}
+                        onClick={
+                          !item.booked
+                            ? () => handleSeats("D", item.seat_no, 110.0)
+                            : null
+                        }
+                      >
+                        {bookedSeats.some(data => {
+                          return (
+                            data.row == item.row && data.seat_no == item.seat_no
+                          );
+                        }) ? (
+                          <p className="seat-A blocked">{item.seat_no}</p>
+                        ) : (
+                          <p
+                            className={
+                              item.booked ? "seat-A booked" : "seat-A available"
+                            }
+                          >
+                            {item.seat_no}
+                          </p>
+                        )}
                       </div>
                     );
                   })}
@@ -236,8 +371,30 @@ const Samp = () => {
 
                   {seats.slice(58, 66).map((item, index) => {
                     return (
-                      <div className="seat-row-A mr-1" key={item.id}>
-                        <p className="seat-A available">{item.seat_no}</p>
+                      <div
+                        className="seat-row-A mr-1"
+                        key={item.id}
+                        onClick={
+                          !item.booked
+                            ? () => handleSeats("D", item.seat_no, 110.0)
+                            : null
+                        }
+                      >
+                        {bookedSeats.some(data => {
+                          return (
+                            data.row == item.row && data.seat_no == item.seat_no
+                          );
+                        }) ? (
+                          <p className="seat-A blocked">{item.seat_no}</p>
+                        ) : (
+                          <p
+                            className={
+                              item.booked ? "seat-A booked" : "seat-A available"
+                            }
+                          >
+                            {item.seat_no}
+                          </p>
+                        )}
                       </div>
                     );
                   })}
@@ -250,8 +407,30 @@ const Samp = () => {
                   <div className="smap-row-name mr-sm-3 mt-2">E</div>
                   {seats.slice(66, 74).map((item, index) => {
                     return (
-                      <div className="seat-row-A mr-1" key={item.id}>
-                        <p className="seat-A available">{item.seat_no}</p>
+                      <div
+                        className="seat-row-A mr-1"
+                        key={item.id}
+                        onClick={
+                          !item.booked
+                            ? () => handleSeats("E", item.seat_no, 110.0)
+                            : null
+                        }
+                      >
+                        {bookedSeats.some(data => {
+                          return (
+                            data.row == item.row && data.seat_no == item.seat_no
+                          );
+                        }) ? (
+                          <p className="seat-A blocked">{item.seat_no}</p>
+                        ) : (
+                          <p
+                            className={
+                              item.booked ? "seat-A booked" : "seat-A available"
+                            }
+                          >
+                            {item.seat_no}
+                          </p>
+                        )}
                       </div>
                     );
                   })}
@@ -261,8 +440,30 @@ const Samp = () => {
 
                   {seats.slice(74, 82).map((item, index) => {
                     return (
-                      <div className="seat-row-A mr-1" key={item.id}>
-                        <p className="seat-A available">{item.seat_no}</p>
+                      <div
+                        className="seat-row-A mr-1"
+                        key={item.id}
+                        onClick={
+                          !item.booked
+                            ? () => handleSeats("E", item.seat_no, 110.0)
+                            : null
+                        }
+                      >
+                        {bookedSeats.some(data => {
+                          return (
+                            data.row == item.row && data.seat_no == item.seat_no
+                          );
+                        }) ? (
+                          <p className="seat-A blocked">{item.seat_no}</p>
+                        ) : (
+                          <p
+                            className={
+                              item.booked ? "seat-A booked" : "seat-A available"
+                            }
+                          >
+                            {item.seat_no}
+                          </p>
+                        )}
                       </div>
                     );
                   })}
@@ -273,10 +474,32 @@ const Samp = () => {
               <tr>
                 <td>
                   <div className="smap-row-name mr-sm-3 mt-2">F</div>
-                  {itmes.map((item, index) => {
+                  {seats.slice(82, 90).map((item, index) => {
                     return (
-                      <div className="seat-row-A mr-1" key={index}>
-                        <p className="seat-A available">{item}</p>
+                      <div
+                        className="seat-row-A mr-1"
+                        key={item.id}
+                        onClick={
+                          !item.booked
+                            ? () => handleSeats("F", item.seat_no, 110.0)
+                            : null
+                        }
+                      >
+                        {bookedSeats.some(data => {
+                          return (
+                            data.row == item.row && data.seat_no == item.seat_no
+                          );
+                        }) ? (
+                          <p className="seat-A blocked">{item.seat_no}</p>
+                        ) : (
+                          <p
+                            className={
+                              item.booked ? "seat-A booked" : "seat-A available"
+                            }
+                          >
+                            {item.seat_no}
+                          </p>
+                        )}
                       </div>
                     );
                   })}
@@ -284,10 +507,32 @@ const Samp = () => {
                   <div className="seat-row-A mr-1">&nbsp;</div>
                   <div className="seat-row-A mr-1">&nbsp;</div>
 
-                  {itmes2.map((item, index) => {
+                  {seats.slice(90, 98).map((item, index) => {
                     return (
-                      <div className="seat-row-A mr-1" key={index}>
-                        <p className="seat-A available">{item}</p>
+                      <div
+                        className="seat-row-A mr-1"
+                        key={item.id}
+                        onClick={
+                          !item.booked
+                            ? () => handleSeats("F", item.seat_no, 110.0)
+                            : null
+                        }
+                      >
+                        {bookedSeats.some(data => {
+                          return (
+                            data.row == item.row && data.seat_no == item.seat_no
+                          );
+                        }) ? (
+                          <p className="seat-A blocked">{item.seat_no}</p>
+                        ) : (
+                          <p
+                            className={
+                              item.booked ? "seat-A booked" : "seat-A available"
+                            }
+                          >
+                            {item.seat_no}
+                          </p>
+                        )}
                       </div>
                     );
                   })}
@@ -298,10 +543,32 @@ const Samp = () => {
               <tr>
                 <td>
                   <div className="smap-row-name mr-sm-3 mt-2">G</div>
-                  {itmes.map((item, index) => {
+                  {seats.slice(98, 106).map((item, index) => {
                     return (
-                      <div className="seat-row-A mr-1" key={index}>
-                        <p className="seat-A available">{item}</p>
+                      <div
+                        className="seat-row-A mr-1"
+                        key={item.id}
+                        onClick={
+                          !item.booked
+                            ? () => handleSeats("G", item.seat_no, 110.0)
+                            : null
+                        }
+                      >
+                        {bookedSeats.some(data => {
+                          return (
+                            data.row == item.row && data.seat_no == item.seat_no
+                          );
+                        }) ? (
+                          <p className="seat-A blocked">{item.seat_no}</p>
+                        ) : (
+                          <p
+                            className={
+                              item.booked ? "seat-A booked" : "seat-A available"
+                            }
+                          >
+                            {item.seat_no}
+                          </p>
+                        )}
                       </div>
                     );
                   })}
@@ -309,10 +576,32 @@ const Samp = () => {
                   <div className="seat-row-A mr-1">&nbsp;</div>
                   <div className="seat-row-A mr-1">&nbsp;</div>
 
-                  {itmes2.map((item, index) => {
+                  {seats.slice(106, 114).map((item, index) => {
                     return (
-                      <div className="seat-row-A mr-1" key={index}>
-                        <p className="seat-A available">{item}</p>
+                      <div
+                        className="seat-row-A mr-1"
+                        key={item.id}
+                        onClick={
+                          !item.booked
+                            ? () => handleSeats("G", item.seat_no, 110.0)
+                            : null
+                        }
+                      >
+                        {bookedSeats.some(data => {
+                          return (
+                            data.row == item.row && data.seat_no == item.seat_no
+                          );
+                        }) ? (
+                          <p className="seat-A blocked">{item.seat_no}</p>
+                        ) : (
+                          <p
+                            className={
+                              item.booked ? "seat-A booked" : "seat-A available"
+                            }
+                          >
+                            {item.seat_no}
+                          </p>
+                        )}
                       </div>
                     );
                   })}
@@ -332,10 +621,32 @@ const Samp = () => {
               <tr>
                 <td>
                   <div className="smap-row-name mr-sm-3 mt-2">H</div>
-                  {itmes.map((item, index) => {
+                  {seats.slice(114, 122).map((item, index) => {
                     return (
-                      <div className="seat-row-A mr-1" key={index}>
-                        <p className="seat-A available">{item}</p>
+                      <div
+                        className="seat-row-A mr-1"
+                        key={item.id}
+                        onClick={
+                          !item.booked
+                            ? () => handleSeats("H", item.seat_no, 110.0)
+                            : null
+                        }
+                      >
+                        {bookedSeats.some(data => {
+                          return (
+                            data.row == item.row && data.seat_no == item.seat_no
+                          );
+                        }) ? (
+                          <p className="seat-A blocked">{item.seat_no}</p>
+                        ) : (
+                          <p
+                            className={
+                              item.booked ? "seat-A booked" : "seat-A available"
+                            }
+                          >
+                            {item.seat_no}
+                          </p>
+                        )}
                       </div>
                     );
                   })}
@@ -343,10 +654,32 @@ const Samp = () => {
                   <div className="seat-row-A mr-1">&nbsp;</div>
                   <div className="seat-row-A mr-1">&nbsp;</div>
 
-                  {itmes2.map((item, index) => {
+                  {seats.slice(122, 130).map((item, index) => {
                     return (
-                      <div className="seat-row-A mr-1" key={index}>
-                        <p className="seat-A available">{item}</p>
+                      <div
+                        className="seat-row-A mr-1"
+                        key={item.id}
+                        onClick={
+                          !item.booked
+                            ? () => handleSeats("H", item.seat_no, 110.0)
+                            : null
+                        }
+                      >
+                        {bookedSeats.some(data => {
+                          return (
+                            data.row == item.row && data.seat_no == item.seat_no
+                          );
+                        }) ? (
+                          <p className="seat-A blocked">{item.seat_no}</p>
+                        ) : (
+                          <p
+                            className={
+                              item.booked ? "seat-A booked" : "seat-A available"
+                            }
+                          >
+                            {item.seat_no}
+                          </p>
+                        )}
                       </div>
                     );
                   })}
@@ -357,10 +690,32 @@ const Samp = () => {
               <tr>
                 <td>
                   <div className="smap-row-name mr-sm-3 mt-2">I</div>
-                  {itmes.map((item, index) => {
+                  {seats.slice(130, 138).map((item, index) => {
                     return (
-                      <div className="seat-row-A mr-1" key={index}>
-                        <p className="seat-A available">{item}</p>
+                      <div
+                        className="seat-row-A mr-1"
+                        key={item.id}
+                        onClick={
+                          !item.booked
+                            ? () => handleSeats("I", item.seat_no, 110.0)
+                            : null
+                        }
+                      >
+                        {bookedSeats.some(data => {
+                          return (
+                            data.row == item.row && data.seat_no == item.seat_no
+                          );
+                        }) ? (
+                          <p className="seat-A blocked">{item.seat_no}</p>
+                        ) : (
+                          <p
+                            className={
+                              item.booked ? "seat-A booked" : "seat-A available"
+                            }
+                          >
+                            {item.seat_no}
+                          </p>
+                        )}
                       </div>
                     );
                   })}
@@ -368,10 +723,32 @@ const Samp = () => {
                   <div className="seat-row-A mr-1">&nbsp;</div>
                   <div className="seat-row-A mr-1">&nbsp;</div>
 
-                  {itmes2.map((item, index) => {
+                  {seats.slice(138, 146).map((item, index) => {
                     return (
-                      <div className="seat-row-A mr-1" key={index}>
-                        <p className="seat-A available">{item}</p>
+                      <div
+                        className="seat-row-A mr-1"
+                        key={item.id}
+                        onClick={
+                          !item.booked
+                            ? () => handleSeats("I", item.seat_no, 110.0)
+                            : null
+                        }
+                      >
+                        {bookedSeats.some(data => {
+                          return (
+                            data.row == item.row && data.seat_no == item.seat_no
+                          );
+                        }) ? (
+                          <p className="seat-A blocked">{item.seat_no}</p>
+                        ) : (
+                          <p
+                            className={
+                              item.booked ? "seat-A booked" : "seat-A available"
+                            }
+                          >
+                            {item.seat_no}
+                          </p>
+                        )}
                       </div>
                     );
                   })}
@@ -382,10 +759,32 @@ const Samp = () => {
               <tr>
                 <td>
                   <div className="smap-row-name mr-sm-3 mt-2">J</div>
-                  {itmes.map((item, index) => {
+                  {seats.slice(146, 154).map((item, index) => {
                     return (
-                      <div className="seat-row-A mr-1" key={index}>
-                        <p className="seat-A available">{item}</p>
+                      <div
+                        className="seat-row-A mr-1"
+                        key={item.id}
+                        onClick={
+                          !item.booked
+                            ? () => handleSeats("J", item.seat_no, 110.0)
+                            : null
+                        }
+                      >
+                        {bookedSeats.some(data => {
+                          return (
+                            data.row == item.row && data.seat_no == item.seat_no
+                          );
+                        }) ? (
+                          <p className="seat-A blocked">{item.seat_no}</p>
+                        ) : (
+                          <p
+                            className={
+                              item.booked ? "seat-A booked" : "seat-A available"
+                            }
+                          >
+                            {item.seat_no}
+                          </p>
+                        )}
                       </div>
                     );
                   })}
@@ -393,10 +792,32 @@ const Samp = () => {
                   <div className="seat-row-A mr-1">&nbsp;</div>
                   <div className="seat-row-A mr-1">&nbsp;</div>
 
-                  {itmes2.map((item, index) => {
+                  {seats.slice(154, 162).map((item, index) => {
                     return (
-                      <div className="seat-row-A mr-1" key={index}>
-                        <p className="seat-A available">{item}</p>
+                      <div
+                        className="seat-row-A mr-1"
+                        key={item.id}
+                        onClick={
+                          !item.booked
+                            ? () => handleSeats("J", item.seat_no, 110.0)
+                            : null
+                        }
+                      >
+                        {bookedSeats.some(data => {
+                          return (
+                            data.row == item.row && data.seat_no == item.seat_no
+                          );
+                        }) ? (
+                          <p className="seat-A blocked">{item.seat_no}</p>
+                        ) : (
+                          <p
+                            className={
+                              item.booked ? "seat-A booked" : "seat-A available"
+                            }
+                          >
+                            {item.seat_no}
+                          </p>
+                        )}
                       </div>
                     );
                   })}
@@ -407,10 +828,32 @@ const Samp = () => {
               <tr>
                 <td>
                   <div className="smap-row-name mr-sm-3 mt-2">K</div>
-                  {itmes.map((item, index) => {
+                  {seats.slice(162, 170).map((item, index) => {
                     return (
-                      <div className="seat-row-A mr-1" key={index}>
-                        <p className="seat-A available">{item}</p>
+                      <div
+                        className="seat-row-A mr-1"
+                        key={item.id}
+                        onClick={
+                          !item.booked
+                            ? () => handleSeats("K", item.seat_no, 110.0)
+                            : null
+                        }
+                      >
+                        {bookedSeats.some(data => {
+                          return (
+                            data.row == item.row && data.seat_no == item.seat_no
+                          );
+                        }) ? (
+                          <p className="seat-A blocked">{item.seat_no}</p>
+                        ) : (
+                          <p
+                            className={
+                              item.booked ? "seat-A booked" : "seat-A available"
+                            }
+                          >
+                            {item.seat_no}
+                          </p>
+                        )}
                       </div>
                     );
                   })}
@@ -418,10 +861,32 @@ const Samp = () => {
                   <div className="seat-row-A mr-1">&nbsp;</div>
                   <div className="seat-row-A mr-1">&nbsp;</div>
 
-                  {itmes2.map((item, index) => {
+                  {seats.slice(170, 178).map((item, index) => {
                     return (
-                      <div className="seat-row-A mr-1" key={index}>
-                        <p className="seat-A available">{item}</p>
+                      <div
+                        className="seat-row-A mr-1"
+                        key={item.id}
+                        onClick={
+                          !item.booked
+                            ? () => handleSeats("K", item.seat_no, 110.0)
+                            : null
+                        }
+                      >
+                        {bookedSeats.some(data => {
+                          return (
+                            data.row == item.row && data.seat_no == item.seat_no
+                          );
+                        }) ? (
+                          <p className="seat-A blocked">{item.seat_no}</p>
+                        ) : (
+                          <p
+                            className={
+                              item.booked ? "seat-A booked" : "seat-A available"
+                            }
+                          >
+                            {item.seat_no}
+                          </p>
+                        )}
                       </div>
                     );
                   })}

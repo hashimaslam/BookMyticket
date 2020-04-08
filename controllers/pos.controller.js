@@ -1,4 +1,5 @@
 const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 Post = require("../models/model.post");
 Cities = require("../models/cities.model");
 Theatres = require("../models/theatres.model");
@@ -172,14 +173,18 @@ exports.Seatmap = function(req, res) {
 
 exports.updateSeat = function(req, res) {
   Seats.update(
-    { booked: req.body.booked },
+    { booked: true },
     {
-      where: Sequelize.and({ row: req.body.row }, { seat_no: req.body.seatno })
+      where: {
+        row: req.body.row,
+        seat_no: req.body.seat_no
+      }
     }
   )
     .then(data => {
       res.json({
-        message: "successfully booked your ticket"
+        message: "successfully booked your ticket",
+        result: data
       });
     })
     .catch(err => res.send(err));

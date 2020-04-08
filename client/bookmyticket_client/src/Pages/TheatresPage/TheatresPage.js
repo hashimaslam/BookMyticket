@@ -56,11 +56,12 @@ const TheatresPage = props => {
       .catch(err => {
         console.log(err);
       });
-    let currdate = date[0] + " " + month[date[0]];
+    let currdate = date[0] + " " + months[datenow.getMonth()];
     maincontext.dispatcher({ type: "Set Date", payload: currdate });
   }, []);
   const handleCurrDate = d => {
     setSelectedDate(d.date);
+    console.log(d.month);
     console.log(d.date + " " + d.month);
     let newDate = d.date + " " + d.month;
     maincontext.dispatcher({ type: "Set Date", payload: newDate });

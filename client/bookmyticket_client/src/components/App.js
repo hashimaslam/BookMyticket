@@ -33,7 +33,8 @@ const initialState = {
   date: "",
   time: "",
   thname: "",
-  showTicketsbtn: false
+  showTicketsbtn: false,
+  bookedtickets: ""
 };
 const Reducer = (state, action) => {
   switch (action.type) {
@@ -97,6 +98,12 @@ const Reducer = (state, action) => {
       return {
         ...state,
         smfilter: !state.smfilter
+      };
+    }
+    case "Book Tickets": {
+      return {
+        ...state,
+        bookedtickets: action.payload
       };
     }
     default:
